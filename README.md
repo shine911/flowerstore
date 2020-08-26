@@ -11,7 +11,7 @@ Open it by Apache Netbean
 Working on process
 
 ## Contributing
-[Qui Huynh Dinh](https:fb.me/QuiHuynh1309) - Leader
+[Qui Huynh Dinh](https://fb.me/QuiHuynh1309) - Leader
 
 ## License
 [Apache 2.0](https://choosealicense.com/licenses/apache-2.0/)
