@@ -1,0 +1,92 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+    <h:head>
+        <meta charset="UTF-8" />
+        <meta name="description" content="" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+        <title>Admin Template </title>
+
+        <!-- Bootstrap -->
+        <h:outputStylesheet name="admin/vendors/bootstrap/dist/css/bootstrap.min.css" />
+        <h:outputStylesheet name="admin/vendors/font-awesome/css/font-awesome.min.css" />
+        <h:outputStylesheet name="admin/vendors/nprogress/nprogress.css" />
+        <h:outputStylesheet name="admin/vendors/animate.css/animate.min.css" />
+        <h:outputStylesheet name="admin/build/css/custom.min.css" />
+        <!-- iCheck -->
+        <h:outputStylesheet name="admin/vendors/iCheck/skins/flat/green.css" />
+
+        <!-- JQVMap -->
+        <h:outputStylesheet name="admin/vendors/jqvmap/dist/jqvmap.min.css" />
+        <!-- bootstrap-daterangepicker -->
+        <h:outputStylesheet name="admin/vendors/bootstrap-daterangepicker/daterangepicker.css" />
+
+    </h:head>
+    <h:body class="nav-md">
+        <div class="container body">
+            <div class="main_container">
+                <div class="col-md-3 left_col">
+                    <ui:include src="sidebar.xhtml" />
+                </div>
+
+                <div class="top_nav">
+                    <ui:include src="topnav.xhtml" />
+                </div>
+
+                <div class="right_col" role="main">
+                    <ui:insert name="content" />
+                </div>
+                <footer>
+                    <div class="pull-right">
+                        Gentelella - Bootstrap Admin Template by <a href="https://colorlib.com">Colorlib</a>
+                    </div>
+                    <div class="clearfix"></div>
+                </footer>
+            </div>
+        </div>
+        <!-- jQuery -->
+        <h:outputScript name="admin/vendors/jquery/dist/jquery.min.js"></h:outputScript>
+        <!-- Bootstrap -->
+        <h:outputScript name="admin/vendors/bootstrap/dist/js/bootstrap.bundle.min.js"></h:outputScript>
+        <!-- FastClick -->
+        <h:outputScript name="admin/vendors/fastclick/lib/fastclick.js"></h:outputScript>
+        <!-- NProgress -->
+        <h:outputScript name="admin/vendors/nprogress/nprogress.js"></h:outputScript>
+        <!-- Chart.js -->
+        <h:outputScript name="admin/vendors/Chart.js/dist/Chart.min.js"></h:outputScript>
+        <!-- gauge.js -->
+        <h:outputScript name="admin/vendors/gauge.js/dist/gauge.min.js"></h:outputScript>
+        <!-- bootstrap-progressbar -->
+        <h:outputScript name="admin/vendors/bootstrap-progressbar/bootstrap-progressbar.min.js"></h:outputScript>
+        <!-- iCheck -->
+        <h:outputScript name="admin/vendors/iCheck/icheck.min.js"></h:outputScript>
+        <!-- Skycons -->
+        <h:outputScript name="admin/vendors/skycons/skycons.js"></h:outputScript>
+        <!-- Flot -->
+        <h:outputScript name="admin/vendors/Flot/jquery.flot.js"></h:outputScript>
+        <h:outputScript name="admin/vendors/Flot/jquery.flot.pie.js"></h:outputScript>
+        <h:outputScript name="admin/vendors/Flot/jquery.flot.time.js"></h:outputScript>
+        <h:outputScript name="admin/vendors/Flot/jquery.flot.stack.js"></h:outputScript>
+        <h:outputScript name="admin/vendors/Flot/jquery.flot.resize.js"></h:outputScript>
+        <!-- Flot plugins -->
+        <h:outputScript name="admin/vendors/flot.orderbars/js/jquery.flot.orderBars.js"></h:outputScript>
+        <h:outputScript name="admin/vendors/flot-spline/js/jquery.flot.spline.min.js"></h:outputScript>
+        <h:outputScript name="admin/vendors/flot.curvedlines/curvedLines.js"></h:outputScript>
+        <!-- DateJS -->
+        <h:outputScript name="admin/vendors/DateJS/build/date.js"></h:outputScript>
+        <!-- JQVMap -->
+        <h:outputScript name="admin/vendors/jqvmap/dist/jquery.vmap.js"></h:outputScript>
+        <h:outputScript name="admin/vendors/jqvmap/dist/maps/jquery.vmap.world.js"></h:outputScript>
+        <h:outputScript name="admin/vendors/jqvmap/examples/js/jquery.vmap.sampledata.js"></h:outputScript>
+        <!-- bootstrap-daterangepicker -->
+        <h:outputScript name="admin/vendors/moment/min/moment.min.js"></h:outputScript>
+        <h:outputScript name="admin/vendors/bootstrap-daterangepicker/daterangepicker.js"></h:outputScript>
+
+        <!-- Custom Theme Scripts -->
+        <h:outputScript name="admin/build/js/custom.min.js"></h:outputScript>
+    </h:body>
+</html>
+
