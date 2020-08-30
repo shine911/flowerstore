@@ -19,10 +19,15 @@
 *.rar
 
 # virtual machine crash logs, see http://www.java.com/en/download/help/error_hotspot.xml
-hs_err_pid*
-/build
-/dist
+# NetBeans specific #
+nbproject/private/
+*/nbproject/private/
+build/
+*/build/
+nbbuild/
+dist/
+*/dist/
+nbdist/
+nbactions.xml
+nb-configuration.xml
 .DS_Store
-*/build
-*/dist
-*/nbproject/private
