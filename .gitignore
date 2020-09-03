@@ -22,12 +22,9 @@
 # NetBeans specific #
 nbproject/private/
 */nbproject/private/
-build/
-*/build/
 nbbuild/
-dist/
-*/dist/
 nbdist/
 nbactions.xml
 nb-configuration.xml
 .DS_Store
+dist/*
