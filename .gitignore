@@ -28,3 +28,8 @@ nbactions.xml
 nb-configuration.xml
 .DS_Store
 dist/*
+/fstore-ejb/build/
+/fstore-ejb/dist/
+/fstore-war/build/
+/fstore-war/dist/
+/build/

@@ -72,12 +72,13 @@
                             <!-- Single Catagory -->
                             <div class="single-products-catagory clearfix">
                                 <a href="shop.html">
-                                    <h:graphicImage name="flowerstore/img/bg-img/1.jpg" alt=""/>
+                                    
+                                    <h:graphicImage value="#{productViewMB.categoryList.get(0).url}" alt=""/>
                                         <!-- Hover Content -->
                                         <div class="hover-content">
                                             <div class="line"></div>
                                             <p>From $180</p>
-                                            <h4>Modern Chair</h4>
+                                            <h4><h:outputText value="#{productViewMB.categoryList.get(0).name}" /></h4>
                                         </div>
                                 </a>
                             </div>
