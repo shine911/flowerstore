@@ -6,9 +6,11 @@
 package facades;
 
 import entities.Images;
+import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.TypedQuery;
 
 /**
  *
@@ -28,5 +30,4 @@ public class ImagesFacade extends AbstractFacade<Images> implements ImagesFacade
     public ImagesFacade() {
         super(Images.class);
     }
-    
 }

@@ -980,8 +980,11 @@ img {
   .single-products-catagory .hover-content {
     position: absolute;
     top: 40px;
-    left: 40px;
-    z-index: 10; }
+    /*Original left is 40px left: 40px;*/
+    z-index: 10; 
+    padding: .2rem 1rem;
+    background: #ffffff94;
+  }
     @media only screen and (max-width: 767px) {
       .single-products-catagory .hover-content {
         top: 30px;

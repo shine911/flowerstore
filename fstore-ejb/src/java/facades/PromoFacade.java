@@ -9,6 +9,7 @@ import entities.Promo;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.TypedQuery;
 
 /**
  *
@@ -28,5 +29,12 @@ public class PromoFacade extends AbstractFacade<Promo> implements PromoFacadeLoc
     public PromoFacade() {
         super(Promo.class);
     }
+
+    @Override
+    public Promo findByCode(String code) {
+        TypedQuery<Promo> q = em.createNamedQuery("Promo.findByPromoCode", Promo.class);
+        return q.setParameter("promoCode", code).getSingleResult();
+    }
+    
     
 }

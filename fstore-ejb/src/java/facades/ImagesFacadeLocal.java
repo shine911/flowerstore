@@ -29,5 +29,4 @@ public interface ImagesFacadeLocal {
     List<Images> findRange(int[] range);
 
     int count();
-    
 }

@@ -39,6 +39,9 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Product.findByColor", query = "SELECT p FROM Product p WHERE p.color = :color")})
 public class Product implements Serializable {
 
+    @OneToMany(mappedBy = "productId")
+    private Collection<Images> imagesCollection;
+
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -150,6 +153,15 @@ public class Product implements Serializable {
     @Override
     public String toString() {
         return "entities.Product[ id=" + id + " ]";
+    }
+
+    @XmlTransient
+    public Collection<Images> getImagesCollection() {
+        return imagesCollection;
+    }
+
+    public void setImagesCollection(Collection<Images> imagesCollection) {
+        this.imagesCollection = imagesCollection;
     }
     
 }

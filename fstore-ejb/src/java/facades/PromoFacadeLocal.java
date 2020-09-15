@@ -27,7 +27,9 @@ public interface PromoFacadeLocal {
     List<Promo> findAll();
 
     List<Promo> findRange(int[] range);
-
+    
+    Promo findByCode(String code);
+    
     int count();
     
 }
