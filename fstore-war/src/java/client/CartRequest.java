@@ -7,6 +7,7 @@ package client;
 
 import entities.OrdersDetails;
 import facades.ProductFacadeLocal;
+import helper.UtilsHelper;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.inject.Named;
@@ -20,67 +21,77 @@ import org.omnifaces.util.Faces;
 @Named(value = "cartRequest")
 @RequestScoped
 public class CartRequest {
-
+    
     @EJB
     private ProductFacadeLocal productFacade;
     
     CartMB cartBean;
+    UserManager userManager;
     
     private int qty;
     private int proid;
-    
+
     /**
      * Creates a new instance of CartRequest
      */
     public CartRequest() {
     }
-
+    
     @PostConstruct
-    public void init(){
+    public void init() {
         this.cartBean = Faces.evaluateExpressionGet("#{cartMB}");
+        this.userManager = Faces.evaluateExpressionGet("#{userManager}");
     }
     
     public int getQty() {
         return qty;
     }
-
+    
     public void setQty(int qty) {
         this.qty = qty;
     }
-
+    
     public int getProid() {
         return proid;
     }
-
+    
     public void setProid(int proid) {
         this.proid = proid;
     }
-    public void editCart(int id){
+    
+    public void editCart(int id) {
         
     }
     
-    public void placeToCart(int id){
-        OrdersDetails ordDetails = new OrdersDetails();
-        //Add product
-        ordDetails.setProductId(productFacade.find(id));
-        ordDetails.setQty(this.qty);
-        /*
+    public void placeToCart(int id) {
+        if (this.userManager.user != null) {
+            OrdersDetails ordDetails = new OrdersDetails();
+            //Add product
+            ordDetails.setProductId(productFacade.find(id));
+            ordDetails.setQty(this.qty);
+            /*
         * If: orderDetails empty - i will add direct
         * else - I will find product in orderdetails
         * if: null - add direct
         * else - sum qty
-        */
-        if(!cartBean.getOrdersDetials().isEmpty()){
-            OrdersDetails getOrd = cartBean.getOrdersDetials().stream()
-                    .filter(prd -> prd.getProductId().getId() == id)
-                    .findFirst().get();
-            if(getOrd==null){
-                cartBean.getOrdersDetials().add(ordDetails);
+             */
+            if (!cartBean.getOrdersDetials().isEmpty()) {
+                OrdersDetails getOrd = cartBean.getOrdersDetials().stream()
+                        .filter(prd -> prd.getProductId().getId() == id)
+                        .findFirst().get();
+                if (getOrd == null) {
+                    cartBean.getOrdersDetials().add(ordDetails);
+                } else {
+                    getOrd.setQty(getOrd.getQty() + this.qty);
+                }
             } else {
-                getOrd.setQty(getOrd.getQty() + this.qty);
+                cartBean.getOrdersDetials().add(ordDetails);
             }
         } else {
-            cartBean.getOrdersDetials().add(ordDetails);
+            UtilsHelper helper = new UtilsHelper();
+            helper.moveToPage("/login");
         }
+        
     }
+    
 }
