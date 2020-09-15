@@ -1,0 +1,104 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
+
+    <body>
+
+        <ui:composition template="/WEB-INF/template/flowerstore/template.xhtml">
+
+            <ui:define name="content">
+                <div class="single-product-area section-padding-100 clearfix">
+                    <div class="container-fluid">
+                        <div class="row">
+                            <div class="col-12">
+                                <nav aria-label="breadcrumb">
+                                    <ol class="breadcrumb">
+                                        <li class="breadcrumb-item"><h:link outcome="index.html" value="Home"></h:link></li>
+                                        <li class="breadcrumb-item"><h:link outcome="shop.html" value="#{productDetails.product.categoryId.name}" /></li>
+                                        <li class="breadcrumb-item"><h:link outcome="shop.html" value="#{productDetails.product.name}" /></li>
+                                    </ol>
+                                </nav>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-12 col-lg-7">
+                                <div class="single_product_thumb">
+                                    <!-- Product Slider -->
+                                    <div id="product_details_slider" class="carousel slide" data-ride="carousel">
+                                        <ol class="carousel-indicators">
+                                            <c:set var="prodId" value="#{productDetails.product.id}" />
+                                            <c:forEach var="imgProd" varStatus="status" items="#{productDetails.product.imagesCollection}">
+                                                <li class="#{status.index==0?'active':''}" data-target="#product_details_slider" data-slide-to="#{status.index}" style="background-image: url(#{imgProd.url});">
+                                                </li>
+                                            </c:forEach>
+                                        </ol>
+
+                                        <div class="carousel-inner">
+                                            <c:forEach var="imgProd" varStatus="status" items="#{productDetails.product.imagesCollection}">
+                                                <div class="carousel-item #{status.index==0?'active':''}">
+                                                    <a class="gallery_img" href="#{imgProd.url}">
+                                                        <img class="d-block w-100" src="#{imgProd.url}" />
+                                                    </a>
+                                                </div>
+                                            </c:forEach>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Product Meta data -->
+                            <div class="col-12 col-lg-5">
+                                <div class="single_product_desc">
+                                    <div class="product-meta-data">
+                                        <div class="line"></div>
+                                        <p class="product-price">$ #{productDetails.product.price}</p>
+                                        <a href="#{request.contextPath}/product/#{productDetails.product.id}"><h6>#{productDetails.product.name}</h6></a>
+                                        <!-- Rating -->
+                                        <div class="ratings-review mb-15 d-flex align-items-center justify-content-between">
+                                            <div class="ratings">
+                                                <i class="fa fa-star" aria-hidden="true"></i>
+                                                <i class="fa fa-star" aria-hidden="true"></i>
+                                                <i class="fa fa-star" aria-hidden="true"></i>
+                                                <i class="fa fa-star" aria-hidden="true"></i>
+                                                <i class="fa fa-star" aria-hidden="true"></i>
+                                            </div>
+                                            <div class="review">
+                                                <a href="#">Write A Review</a>
+                                            </div>
+                                        </div>
+                                        <p class="avaibility"><i class="fa fa-circle"></i> In Stock</p>
+                                    </div>
+                                    <div class="short_overview my-5">
+                                        <p>#{productDetails.product.description}</p>
+                                    </div>
+                                    <!-- Add to Cart Form -->
+                                    <h:form prependId="false" class="cart clearfix">
+                                        <div class="cart-btn d-flex mb-50">
+                                            <p>Qty</p>
+                                            <div class="quantity">
+                                                <span class="qty-minus" onclick="var effect = document.getElementById('qty'); var qty = effect.value; if (!isNaN(qty) &amp;&amp; qty &gt; 1) effect.value--; return false;"><i class="fa fa-caret-down" aria-hidden="true"></i></span>
+                                                <h:inputText class="qty-text" id="qty" value="#{cartRequest.qty}" />
+                                                <span class="qty-plus" onclick="var effect = document.getElementById('qty');
+                                                        var qty = effect.value;
+                                                        if (!isNaN(qty))
+                                                            effect.value++;
+                                                        return false;"><i class="fa fa-caret-up" aria-hidden="true"></i></span>
+                                            </div>
+                                        </div>
+                                        <h:commandButton type="submit" action="#{cartRequest.placeToCart(productDetails.product.id)}" value="Add to cart" class="btn amado-btn"></h:commandButton>
+                                    </h:form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </ui:define>
+
+        </ui:composition>
+
+    </body>
+</html>

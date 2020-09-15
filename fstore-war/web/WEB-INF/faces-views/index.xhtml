@@ -1,0 +1,38 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
+
+    <body>
+
+        <ui:composition template="/WEB-INF/template/flowerstore/template.xhtml">
+
+            <ui:define name="content">
+                    <!-- Product Catagories Area Start -->
+                    <div class="products-catagories-area clearfix">
+                        <div class="amado-pro-catagory clearfix">
+                            <c:forEach var="category" items="#{homeMB.categoryList}">
+                                <!-- Single Catagory -->
+                                <div class="single-products-catagory clearfix">
+                                    <a href="#{request.contextPath}/shop/#{category.id}">
+                                        <h:graphicImage value="#{category.url}"></h:graphicImage>
+                                        <div class="hover-content">
+                                            <div class="line"></div>
+                                            <p><h:outputText value="#{category.description}" /></p>
+                                            <h4><h:outputText value="#{category.name}" /></h4>
+                                        </div>
+                                    </a>
+                                </div>
+                            </c:forEach>
+                        </div>
+                    </div>
+                    <!-- Product Catagories Area End -->
+                <!-- ##### Main Content Wrapper End ##### -->
+            </ui:define>
+
+        </ui:composition>
+
+    </body>
+</html>
