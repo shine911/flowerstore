@@ -6,7 +6,6 @@
 package entities;
 
 import java.io.Serializable;
-import java.util.Collection;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -17,11 +16,10 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
-import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
@@ -39,7 +37,9 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Userinfo.findByEmail", query = "SELECT u FROM Userinfo u WHERE u.email = :email"),
     @NamedQuery(name = "Userinfo.findByCountry", query = "SELECT u FROM Userinfo u WHERE u.country = :country"),
     @NamedQuery(name = "Userinfo.findByZipcode", query = "SELECT u FROM Userinfo u WHERE u.zipcode = :zipcode"),
-    @NamedQuery(name = "Userinfo.findByPhone", query = "SELECT u FROM Userinfo u WHERE u.phone = :phone")})
+    @NamedQuery(name = "Userinfo.findByPhone", query = "SELECT u FROM Userinfo u WHERE u.phone = :phone"),
+    @NamedQuery(name = "Userinfo.findByUsername", query = "SELECT u FROM Userinfo u WHERE u.username = :username"),
+    @NamedQuery(name = "Userinfo.findByPassword", query = "SELECT u FROM Userinfo u WHERE u.password = :password")})
 public class Userinfo implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -70,17 +70,31 @@ public class Userinfo implements Serializable {
     @Size(max = 11)
     @Column(name = "phone")
     private String phone;
-    @OneToMany(mappedBy = "cusId")
-    private Collection<Orders> ordersCollection;
-    @JoinColumn(name = "username", referencedColumnName = "username")
-    @ManyToOne
-    private Users username;
+    @Basic(optional = false)
+    @NotNull
+    @Size(min = 1, max = 20)
+    @Column(name = "username")
+    private String username;
+    @Basic(optional = false)
+    @NotNull
+    @Size(min = 1, max = 200)
+    @Column(name = "password")
+    private String password;
+    @JoinColumn(name = "role_id", referencedColumnName = "id")
+    @ManyToOne(optional = false)
+    private Roles roleId;
 
     public Userinfo() {
     }
 
     public Userinfo(Integer id) {
         this.id = id;
+    }
+
+    public Userinfo(Integer id, String username, String password) {
+        this.id = id;
+        this.username = username;
+        this.password = password;
     }
 
     public Integer getId() {
@@ -147,21 +161,28 @@ public class Userinfo implements Serializable {
         this.phone = phone;
     }
 
-    @XmlTransient
-    public Collection<Orders> getOrdersCollection() {
-        return ordersCollection;
-    }
-
-    public void setOrdersCollection(Collection<Orders> ordersCollection) {
-        this.ordersCollection = ordersCollection;
-    }
-
-    public Users getUsername() {
+    public String getUsername() {
         return username;
     }
 
-    public void setUsername(Users username) {
+    public void setUsername(String username) {
         this.username = username;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public Roles getRoleId() {
+        return roleId;
+    }
+
+    public void setRoleId(Roles roleId) {
+        this.roleId = roleId;
     }
 
     @Override

@@ -23,6 +23,8 @@ public interface UserinfoFacadeLocal {
     void remove(Userinfo userinfo);
 
     Userinfo find(Object id);
+    
+    Userinfo findByUsername(String username);
 
     List<Userinfo> findAll();
 

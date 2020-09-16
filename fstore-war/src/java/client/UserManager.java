@@ -5,7 +5,7 @@
  */
 package client;
 
-import entities.Users;
+import entities.Userinfo;
 import javax.inject.Named;
 import javax.enterprise.context.SessionScoped;
 import java.io.Serializable;
@@ -21,16 +21,16 @@ public class UserManager implements Serializable {
     /**
      * Creates a new instance of UserManager
      */
-    Users user;
+    Userinfo user;
     
     public UserManager() {
     }
 
-    public Users getUser() {
+    public Userinfo getUser() {
         return user;
     }
 
-    public void setUser(Users user) {
+    public void setUser(Userinfo user) {
         this.user = user;
     }
     

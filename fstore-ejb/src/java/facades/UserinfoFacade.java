@@ -9,6 +9,7 @@ import entities.Userinfo;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.TypedQuery;
 
 /**
  *
@@ -27,6 +28,12 @@ public class UserinfoFacade extends AbstractFacade<Userinfo> implements Userinfo
 
     public UserinfoFacade() {
         super(Userinfo.class);
+    }
+
+    @Override
+    public Userinfo findByUsername(String username) {
+        TypedQuery<Userinfo> user = em.createNamedQuery("Userinfo.findByUsername", Userinfo.class);
+        return user.setParameter("username", username).getSingleResult();
     }
     
 }

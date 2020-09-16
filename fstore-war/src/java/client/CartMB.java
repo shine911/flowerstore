@@ -10,7 +10,10 @@ import entities.Orders;
 import entities.OrdersDetails;
 import entities.Promo;
 import facades.ImagesFacadeLocal;
+import facades.OrdersDetailsFacadeLocal;
+import facades.OrdersFacadeLocal;
 import facades.PromoFacadeLocal;
+import helper.UtilsHelper;
 import java.io.IOException;
 import javax.inject.Named;
 import javax.enterprise.context.SessionScoped;
@@ -25,6 +28,7 @@ import javax.ejb.EJBException;
 import javax.faces.context.FacesContext;
 import javax.servlet.http.HttpServletRequest;
 import org.omnifaces.util.Ajax;
+import org.omnifaces.util.Faces;
 
 /**
  *
@@ -35,12 +39,21 @@ import org.omnifaces.util.Ajax;
 public class CartMB implements Serializable {
 
     @EJB
+    private OrdersDetailsFacadeLocal ordersDetailsFacade;
+
+    @EJB
+    private OrdersFacadeLocal ordersFacade;
+
+    @EJB
     private PromoFacadeLocal promoFacade;
-    
+
+    UserManager userManager;
+
     private List<OrdersDetails> ordersDetials;
     private Orders orders;
     private String promo_code;
     private Promo promoObj;
+
     /**
      * Creates a new instance of CartMB
      */
@@ -48,10 +61,12 @@ public class CartMB implements Serializable {
     }
 
     @PostConstruct
-    public void init(){
+    public void init() {
         this.ordersDetials = new ArrayList<>();
+        this.userManager = Faces.evaluateExpressionGet("#{userManager}");
+
     }
-    
+
     public List<OrdersDetails> getOrdersDetials() {
         return ordersDetials;
     }
@@ -75,20 +90,20 @@ public class CartMB implements Serializable {
     public void setPromo_code(String promo_code) {
         this.promo_code = promo_code;
     }
-    
-    public Double getSubTotal(){
+
+    public Double getSubTotal() {
         double subtotal = 0;
         subtotal = this.ordersDetials.stream().map(ord -> ord.getQty() * ord.getProductId().getPrice()).reduce(subtotal, (accumulator, _item) -> accumulator + _item);
         return subtotal;
     }
-    
-    public void checkPromo(){
-        try{
-        Promo searchPromo = this.promoFacade.findByCode(this.promo_code);
-        if(searchPromo != null){
-            this.promoObj = searchPromo;
-        }
-        } catch (EJBException ex){
+
+    public void checkPromo() {
+        try {
+            Promo searchPromo = this.promoFacade.findByCode(this.promo_code);
+            if (searchPromo != null) {
+                this.promoObj = searchPromo;
+            }
+        } catch (EJBException ex) {
             this.promoObj = null;
         }
     }
@@ -100,32 +115,34 @@ public class CartMB implements Serializable {
     public void setPromoObj(Promo promoObj) {
         this.promoObj = promoObj;
     }
-    
-    public Double getDiscount(){
-        if(promoObj!=null){
-            return promoObj.getDiscountType()==1?(promoObj.getDiscountValue()/100*getSubTotal()):promoObj.getDiscountValue();
+
+    public Double getDiscount() {
+        if (promoObj != null) {
+            return promoObj.getDiscountType() == 1 ? (promoObj.getDiscountValue() / 100 * getSubTotal()) : promoObj.getDiscountValue();
         }
         return 0.0;
     }
-    public void subQtyToProduct(int product){
+
+    public void subQtyToProduct(int product) {
         entities.OrdersDetails getProduct = this.ordersDetials.stream()
-                .filter(x->x.getProductId().getId()==product).findFirst()
+                .filter(x -> x.getProductId().getId() == product).findFirst()
                 .get();
-        if(getProduct.getQty()<=0){
+        if (getProduct.getQty() <= 0) {
             this.ordersDetials.remove(getProduct);
             Ajax.oncomplete("window.location.reload()");
-        } else{
+        } else {
             getProduct.setQty(getProduct.getQty() - 1);
         }
     }
-    public void addQtyToProduct(int product){
+
+    public void addQtyToProduct(int product) {
         entities.OrdersDetails getProduct = this.ordersDetials.stream()
-                .filter(x->x.getProductId().getId()==product).findFirst()
+                .filter(x -> x.getProductId().getId() == product).findFirst()
                 .get();
         getProduct.setQty(getProduct.getQty() + 1);
     }
-    
-        private void moveToCart() {
+
+    private void moveToCart() {
         try {
             FacesContext context = FacesContext.getCurrentInstance();
             HttpServletRequest origRequest = (HttpServletRequest) context.getExternalContext().getRequest();
@@ -135,8 +152,27 @@ public class CartMB implements Serializable {
             Logger.getLogger(ProductDetails.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-        
-    public void checkOut(){
-        
+
+    public void checkOut() {
+        Orders orders_new = new Orders();
+        orders_new.setCusId(userManager.user);
+        //orders_new.setOrdersDetailsCollection(this.ordersDetials);
+        orders_new.setTotalValue(this.getSubTotal());
+        orders_new.setDiscountValue(this.getDiscount());
+        orders_new.setPromoId(promoObj);
+        orders_new.setOrdersState(0);
+        ordersFacade.create(orders_new);
+        //System.out.println(orders_new.getId());
+        ordersDetials.stream().map(ordDetails -> {
+            ordDetails.setOrdersId(orders_new);
+            return ordDetails;
+        }).forEachOrdered(ordDetails -> {
+            ordersDetailsFacade.create(ordDetails);
+        });
+        UtilsHelper helper = new UtilsHelper();
+        this.ordersDetials = new ArrayList<>();
+        this.promoObj = null;
+        this.promo_code = "";
+        helper.moveToPage("/myaccount");
     }
 }

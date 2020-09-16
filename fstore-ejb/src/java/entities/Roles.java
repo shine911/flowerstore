@@ -6,8 +6,9 @@
 package entities;
 
 import java.io.Serializable;
-import java.util.Collection;
+import java.util.List;
 import javax.persistence.Basic;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -46,8 +47,8 @@ public class Roles implements Serializable {
     @Size(min = 1, max = 20)
     @Column(name = "rolename")
     private String rolename;
-    @OneToMany(mappedBy = "roleId")
-    private Collection<Users> usersCollection;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "roleId")
+    private List<Userinfo> userinfoList;
 
     public Roles() {
     }
@@ -78,12 +79,12 @@ public class Roles implements Serializable {
     }
 
     @XmlTransient
-    public Collection<Users> getUsersCollection() {
-        return usersCollection;
+    public List<Userinfo> getUserinfoList() {
+        return userinfoList;
     }
 
-    public void setUsersCollection(Collection<Users> usersCollection) {
-        this.usersCollection = usersCollection;
+    public void setUserinfoList(List<Userinfo> userinfoList) {
+        this.userinfoList = userinfoList;
     }
 
     @Override

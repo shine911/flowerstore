@@ -1,14 +1,113 @@
 <?xml version='1.0' encoding='UTF-8' ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
 
     <body>
 
         <ui:composition template="./../template/flowerstore/template.xhtml">
 
             <ui:define name="content">
-                content
+                <div class="cart-table-area section-padding-100">
+                    <div class="container-fluid">
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="title"><h2>Registry Form</h2></div>
+                                <div class="clearfix">
+                                    <h:form id="myForm">
+                                        <div class="row">
+                                            <div class="col-12 col-lg-6">
+                                                <div class="form-group">
+                                                    <h:outputLabel for="fname" value="First Name" />
+                                                    <h:inputText id="fname" value="#{registryForm.fname}" styleClass="form-control"
+                                                                 required="true" requiredMessage="First name is required">
+                                                        <f:ajax event="blur" render="fname_msg"></f:ajax>
+                                                    </h:inputText>
+                                                    <h:message id="fname_msg" for="fname" styleClass="form-text small" errorClass="form-text small text-danger" />
+                                                </div>
+                                                <div class="form-group">
+                                                    <h:outputLabel for="lname" value="Last Name"/>
+                                                    <h:inputText id="lname" value="#{registryForm.lname}" styleClass="form-control"
+                                                                 required="true" requiredMessage="Last name is required">
+                                                        <f:ajax event="blur" render="lname_msg"></f:ajax>
+
+                                                    </h:inputText>
+                                                    <h:message id="lname_msg" for="lname" styleClass="form-text small" errorClass="form-text small text-danger"/>
+                                                </div>
+                                                <div class="form-group">
+                                                    <h:outputLabel for="address" value="Address" />
+                                                    <h:inputTextarea id="address" styleClass="form-control" value="#{registryForm.address}"
+                                                                     required="true" requiredMessage="Address is required">
+                                                        <f:ajax event="blur" render="address_msg"></f:ajax>
+                                                    </h:inputTextarea>
+                                                    <h:message id="address_msg" for="address" styleClass="form-text small" errorClass="form-text small text-danger" />
+                                                </div>
+                                                <div class="form-group">
+                                                    <h:outputLabel for="email" value="Email" />
+                                                    <h:inputText id="email" styleClass="form-control" value="#{registryForm.email}">
+                                                        <f:ajax event="blur" render="email_msg"></f:ajax>
+                                                    </h:inputText>
+                                                    <h:message id="email_msg" for="email" styleClass="form-text" errorClass="form-text small text-danger"/>
+
+                                                </div>
+                                                <div class="form-group">
+                                                    <h:outputLabel for="country" value="Country" />
+                                                    <h:inputText id="country" styleClass="form-control" value="#{registryForm.country}"
+                                                                 required="true" requiredMessage="Country is required">
+                                                        <f:ajax event="blur" render="country_msg">
+                                                        </f:ajax>
+                                                    </h:inputText>
+                                                    <h:message id="country_msg" for="country" styleClass="form-text small" errorClass="form-text small text-danger"/>
+                                                </div>
+                                                <div class="form-group">
+                                                    <h:outputLabel for="zipcode" value="Zip code" />
+                                                    <h:inputText id="zipcode" styleClass="form-control" value="#{registryForm.zipcode}" 
+                                                                 required="true" requiredMessage="Zip code is required">
+                                                        <f:ajax event="blur" render="zipcode_msg"></f:ajax>
+                                                    </h:inputText>
+                                                    <h:message id="zipcode_msg" for="zipcode" styleClass="form-text small" errorClass="form-text small text-danger"/>
+                                                </div>
+                                            </div>
+                                            <div class="col-12 col-lg-6">
+                                                <div class="form-group">
+                                                    <h:outputLabel for="phone" value="Phone" />
+                                                    <h:inputText id="phone" styleClass="form-control" value="#{registryForm.phone}" 
+                                                                 required="true" requiredMessage="Phone is required">
+                                                        <f:ajax event="blur" render="phone_msg"></f:ajax>
+                                                    </h:inputText>
+                                                    <h:message id="phone_msg" for="phone" styleClass="form-text small" errorClass="form-text small text-danger"/>
+                                                </div>
+                                                <div class="form-group">
+                                                    <h:outputLabel for="username" value="Username" />
+                                                    <h:inputText id="username" styleClass="form-control" value="#{registryForm.username}"
+                                                                 required="true" requiredMessage="Username is required">
+                                                        <f:validator binding="#{userExistsValidator}" />
+                                                        <f:ajax event="blur" render="username_msg" />
+                                                    </h:inputText>
+                                                    <h:message id="username_msg" for="username" styleClass="form-text small" errorClass="form-text small text-danger"/>
+                                                </div>
+                                                <div class="form-group">
+                                                    <h:outputLabel for="password" value="Password" />
+                                                    <h:inputSecret styleClass="form-control" id="password" value="#{registryForm.password}"
+                                                                   required="true" requiredMessage="Password is required">
+                                                        <f:validateLength minimum="6"></f:validateLength>
+                                                        <f:ajax event="blur" render="password_msg"></f:ajax>
+                                                    </h:inputSecret>
+                                                    <h:message id="password_msg" for="password" styleClass="form-text small" errorClass="form-text small text-danger" />
+                                                </div>
+                                                <h:commandButton styleClass="btn amado-btn" value="Submit">
+                                                    <f:ajax event="click" listener="#{registryForm.registry()}"/>
+                                                </h:commandButton>
+                                            </div>
+                                        </div>
+                                    </h:form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </ui:define>
 
         </ui:composition>

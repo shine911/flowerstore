@@ -5,16 +5,13 @@
  */
 package client;
 
-import facades.UsersFacadeLocal;
+import entities.Userinfo;
+import facades.UserinfoFacadeLocal;
 import javax.ejb.EJB;
 import javax.inject.Named;
 import javax.enterprise.context.RequestScoped;
-import entities.Users;
 import helper.UtilsHelper;
 import java.io.IOException;
-import java.math.BigInteger;
-import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.annotation.PostConstruct;
@@ -31,7 +28,7 @@ import org.omnifaces.util.Faces;
 public class LoginBean {
 
     @EJB
-    private UsersFacadeLocal usersFacade;
+    private UserinfoFacadeLocal usersFacade;
 
     private String username;
     private String password;
@@ -50,7 +47,7 @@ public class LoginBean {
     }
 
     public void login() {
-        Users user = usersFacade.find(this.username);
+        Userinfo user = usersFacade.findByUsername(this.username);
         if (user != null) {
             UtilsHelper helper = new UtilsHelper();
             //Md5 hash password
