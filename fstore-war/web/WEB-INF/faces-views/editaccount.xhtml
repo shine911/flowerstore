@@ -1,0 +1,128 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <body>
+
+        <ui:composition template="./../template/flowerstore/template.xhtml">
+
+            <ui:define name="content">
+                <div class="cart-table-area section-padding-100">
+                    <div class="container-fluid">
+                        <div class="row">
+                            <div class="col-12">
+                                <h2>Edit account information</h2>
+                            </div>
+
+                        </div>
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="cart-table clearfix">
+                                    <h:form id="edit_form">
+                                        <div class="row">
+                                            <div class="col-12 col-lg-6">
+                                                <div class="form-group">
+                                                    <h:outputLabel for="fname" value="First Name" />
+                                                    <h:inputText id="fname" styleClass="form-control" value="#{editAccountForm.fname}" 
+                                                                 required="true"
+                                                                 requiredMessage="First name is required">
+                                                        <f:ajax event="blur" render="fname_msg" />
+                                                    </h:inputText>
+                                                    <h:message id="fname_msg" for="fname" errorClass="form-text small text-danger"/>
+                                                </div>
+                                                <div class="form-group">
+                                                    <h:outputLabel for="lname" value="Last Name" />
+                                                    <h:inputText id="lname" styleClass="form-control" value="#{editAccountForm.lname}"
+                                                                 required="true"
+                                                                 requiredMessage="Last name is required">
+                                                        <f:ajax event="blur" render="lname_msg" />
+                                                    </h:inputText>
+                                                    <h:message id="lname_msg" for="lname" errorClass="form-text small text-danger" />
+                                                </div>
+                                                <div class="form-group">
+                                                    <h:outputLabel for="address" value="Address" />
+                                                    <h:inputTextarea id="address" styleClass="form-control" value="#{editAccountForm.address}"
+                                                                     required="true"
+                                                                     requiredMessage="Address is required">
+                                                        <f:ajax event="blur" render="address_msg" />
+                                                    </h:inputTextarea>
+                                                    <h:message id="address_msg" for="address" errorClass="form-text small text-danger" />
+                                                </div>
+                                                <div class="form-group">
+                                                    <h:outputLabel for="country" value="Country" />
+                                                    <h:inputText id="country" styleClass="form-control" value="#{editAccountForm.country}"
+                                                                 required="true"
+                                                                 requiredMessage="Address is required">
+                                                        <f:ajax event="blur" render="country_msg"/>
+                                                    </h:inputText>
+                                                    <h:message id="country_msg" for="country" errorClass="form-text small text-danger" />
+                                                </div>
+                                                <div class="form-group">
+                                                    <h:outputLabel for="email" value="Email" />
+                                                    <h:inputText id="email" styleClass="form-control" value="#{editAccountForm.email}"></h:inputText>
+                                                    <h:message id="email_msg" for="email" errorClass="form-text small text-danger" />
+                                                </div>
+                                                <div class="form-group">
+                                                    <h:outputLabel for="zipcode" value="Zip Code" />
+                                                    <h:inputText id="zipcode" styleClass="form-control" value="#{editAccountForm.zipcode}" 
+                                                                 required="true"
+                                                                 requiredMessage="Address is required">
+                                                        <f:ajax event="blur" render="zipcode_msg" />
+                                                    </h:inputText>
+                                                    <h:message id="zipcode_msg" for="zipcode" errorClass="form-text small text-danger" />
+                                                </div>
+                                            </div>
+                                            <div class="col-12 col-lg-6">
+                                                <div class="form-group">
+                                                    <h:outputLabel for="phone" value="Phone" />
+                                                    <h:inputText id="phone" styleClass="form-control" value="#{editAccountForm.phone}" 
+                                                                 required="true" requiredMessage="Phone is required">
+                                                        <f:ajax event="blur" render="phone_msg"></f:ajax>
+                                                    </h:inputText>
+                                                    <h:message id="phone_msg" for="phone" styleClass="form-text small" errorClass="form-text small text-danger"/>
+                                                </div>
+                                                <div class="form-group">
+                                                    <h:outputLabel for="username" value="Username" />
+                                                    <h:inputText id="username" styleClass="form-control" value="#{userManager.user.username}"
+                                                                 disabled="true">
+                                                    </h:inputText>
+                                                    <h:outputText value="You cannot change username" styleClass="form-text small text-danger" />
+                                                </div>
+                                                <div class="form-group">
+                                                    <h:outputLabel for="current_password" value="Current" />
+                                                    <h:inputSecret styleClass="form-control" id="current_password" value="#{editAccountForm.current_password}">
+                                                        <f:validator binding="#{currentPasswordMatch}" />
+                                                        <f:ajax event="blur" render="current_password_msg"></f:ajax>
+                                                    </h:inputSecret>
+                                                    <h:message id="current_password_msg" for="current_password" styleClass="form-text small" errorClass="form-text small text-danger" />
+                                                </div>
+                                                <div class="form-group">
+                                                    <h:outputLabel for="new_password" value="New Password" />
+                                                    <h:inputSecret styleClass="form-control" id="new_password" value="#{editAccountForm.new_password}"
+                                                                   required="true" requiredMessage="Password is required">
+                                                        <f:validateLength minimum="6"></f:validateLength>
+                                                        <f:ajax event="blur" render="new_password_msg"></f:ajax>
+                                                    </h:inputSecret>
+                                                    <h:message id="new_password_msg" for="new_password" styleClass="form-text small" errorClass="form-text small text-danger" />
+                                                </div>
+                                                <h:commandButton styleClass="btn amado-btn" value="Submit">
+                                                    <f:ajax event="click" listener="#{editAccountForm.saveInformation()}"/>
+                                                </h:commandButton>
+                                            </div>
+                                        </div>
+                                    </h:form>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </ui:define>
+
+        </ui:composition>
+
+    </body>
+</html>

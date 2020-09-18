@@ -1,0 +1,71 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
+
+    <body>
+
+        <ui:composition template="./../template/flowerstore/template.xhtml">
+            <ui:define name="content">
+                <div class="cart-table-area section-padding-100">
+                    <div class="container-fluid">
+                        <div class="row">
+                            <div class="col-12 col-lg-8">
+                                <div class="cart-title mt-50">
+                                    <h2>Shopping Cart</h2>
+                                </div>
+                                <div class="cart-table clearfix">
+                                    <table class="table table-responsive">
+                                        <thead>
+                                            <tr>
+                                                <th></th>
+                                                <th>Name</th>
+                                                <th>Price</th>
+                                                <th>Quantity</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <c:set var="id" value="#{orderDetails.id}" />
+                                            <c:forEach var="product" items="#{userManager.ordersDetailsList(id).ordersDetailsCollection}">
+                                                <tr>
+                                                    <td class="cart_product_img">
+                                                        <a href="#"><h:graphicImage value="#{product.productId.imagesCollection[0].url}" alt="Product" /></a>
+                                                    </td>
+                                                    <td class="cart_product_desc">
+                                                        <h5>#{product.productId.name}</h5>
+                                                    </td>
+                                                    <td class="price">
+                                                        <span>$#{product.productId.price}</span>
+                                                    </td>
+                                                    <td class="qty">
+                                                        <span>#{product.qty}</span>
+                                                    </td>
+                                                </tr>
+                                            </c:forEach>
+
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                            <div class="col-12 col-lg-4">
+                                <div class="cart-summary">
+                                    <h5>Cart Total</h5>
+                                    <ul class="summary-table">
+                                        <li><span>subtotal</span><span><h:outputText id="subtotal" value="$#{userManager.ordersDetailsList(id).totalValue}" /></span></li>
+                                        <li><span>discount:</span><span><h:outputText id="discount" value="$#{userManager.ordersDetailsList(id).discountValue}" /></span></li>
+                                        <li><span>promo:</span><h:outputText value="#{userManager.ordersDetailsList(id).promoId.promoCode}" /></li>
+                                        <li><span>total:</span><span><h:outputText id="total" value="$#{userManager.ordersDetailsList(id).totalValue - userManager.ordersDetailsList(id).discountValue}" /></span></li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </ui:define>
+
+        </ui:composition>
+
+    </body>
+</html>

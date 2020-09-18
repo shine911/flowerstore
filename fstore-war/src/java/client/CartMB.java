@@ -156,23 +156,26 @@ public class CartMB implements Serializable {
     public void checkOut() {
         Orders orders_new = new Orders();
         orders_new.setCusId(userManager.user);
-        //orders_new.setOrdersDetailsCollection(this.ordersDetials);
         orders_new.setTotalValue(this.getSubTotal());
         orders_new.setDiscountValue(this.getDiscount());
         orders_new.setPromoId(promoObj);
         orders_new.setOrdersState(0);
+        orders_new.setOrderDate(new java.sql.Date(System.currentTimeMillis()));
         ordersFacade.create(orders_new);
-        //System.out.println(orders_new.getId());
         ordersDetials.stream().map(ordDetails -> {
             ordDetails.setOrdersId(orders_new);
             return ordDetails;
         }).forEachOrdered(ordDetails -> {
             ordersDetailsFacade.create(ordDetails);
-        });
+        }); 
+        //orders_new.setOrdersDetailsCollection(ordersDetials);
         UtilsHelper helper = new UtilsHelper();
         this.ordersDetials = new ArrayList<>();
         this.promoObj = null;
         this.promo_code = "";
-        helper.moveToPage("/myaccount");
+        
+        //Refresh user session bean
+        this.userManager.refresh();
+        helper.moveToPage("/myorders");
     }
 }

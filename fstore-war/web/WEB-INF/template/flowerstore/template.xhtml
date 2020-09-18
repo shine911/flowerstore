@@ -3,7 +3,8 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
-      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+      xmlns:a="http://xmlns.jcp.org/jsf/passthrough">
     <h:head>
         <meta charset="UTF-8" />
         <meta name="description" content="" />
@@ -26,10 +27,10 @@
                 <div class="row">
                     <div class="col-12">
                         <div class="search-content">
-                            <form action="#" method="get">
-                                <input type="search" name="search" id="search" placeholder="Type your keyword..."/>
+                            <h:form id="searchForm">
+                                <h:inputText id="search" a:placeholder="Type your keyword..."/>
                                 <button type="submit"><h:graphicImage name="flowerstore/img/core-img/search.png" alt="" /></button>
-                            </form>
+                            </h:form>
                         </div>
                     </div>
                 </div>
@@ -69,7 +70,7 @@
                         <li><a href="">About</a></li>
                         <li><a href="">Contact</a></li>
                         <c:if test="#{userManager.user!=null}">
-                            <li><a href="/myaccount">My Account</a></li>
+                            <li><h:link outcome="/myaccount">My Account</h:link></li>
                             <li>
                                 <h:form>
                                     <h:commandLink action="#{loginBean.logout()}">Logout</h:commandLink>
@@ -161,7 +162,24 @@
         <!-- Plugins js -->
         <h:outputScript name="flowerstore/js/plugins.js"/>
         <!-- Active js -->
-        <h:outputScript name="flowerstore/js/active.js"/>    
+        <h:outputScript name="flowerstore/js/active.js"/> 
+
+        <script>
+            function initFreshChat() {
+                window.fcWidget.init({
+                    token: "8d464e31-d4d2-4c10-8042-9b1bda1851e1",
+                    host: "https://wchat.freshchat.com"
+                });
+            }
+            function initialize(i, t) {
+                var e;
+                i.getElementById(t) ? initFreshChat() : ((e = i.createElement("script")).id = t, e.async = !0, e.src = "https://wchat.freshchat.com/js/widget.js", e.onload = initFreshChat, i.head.appendChild(e))
+            }
+            function initiateCall() {
+                initialize(document, "freshchat-js-sdk")
+            }
+            window.addEventListener ? window.addEventListener("load", initiateCall, !1) : window.attachEvent("load", initiateCall, !1);
+        </script>
     </h:body>
 </html>
 

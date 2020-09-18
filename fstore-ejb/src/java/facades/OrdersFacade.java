@@ -6,9 +6,11 @@
 package facades;
 
 import entities.Orders;
+import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.TypedQuery;
 
 /**
  *
@@ -27,6 +29,12 @@ public class OrdersFacade extends AbstractFacade<Orders> implements OrdersFacade
 
     public OrdersFacade() {
         super(Orders.class);
+    }
+
+    @Override
+    public List<Orders> findByUser(Object id) {
+        TypedQuery<Orders> q = em.createNamedQuery("Orders.findByCusId", Orders.class);
+        return q.setParameter("cusId", id).getResultList();
     }
     
 }

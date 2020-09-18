@@ -35,7 +35,7 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author quihuynh
  */
-@WebFilter(filterName = "LoginFunctionFilter", urlPatterns = {"/myaccount"})
+@WebFilter(filterName = "LoginFunctionFilter", urlPatterns = {"/myaccount", "/editaccount", "/myorders", "/orderdetails/*"})
 public class LoginFunctionFilter implements Filter {
     
     private static final boolean debug = true;

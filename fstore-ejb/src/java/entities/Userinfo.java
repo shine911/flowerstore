@@ -6,6 +6,7 @@
 package entities;
 
 import java.io.Serializable;
+import java.util.Collection;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -16,6 +17,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
@@ -83,6 +85,8 @@ public class Userinfo implements Serializable {
     @JoinColumn(name = "role_id", referencedColumnName = "id")
     @ManyToOne(optional = false)
     private Roles roleId;
+    @OneToMany(mappedBy = "cusId")
+    private Collection<Orders> orders;
 
     public Userinfo() {
     }
@@ -185,6 +189,15 @@ public class Userinfo implements Serializable {
         this.roleId = roleId;
     }
 
+    public Collection<Orders> getOrders() {
+        return orders;
+    }
+
+    public void setOrders(Collection<Orders> orders) {
+        this.orders = orders;
+    }
+
+    
     @Override
     public int hashCode() {
         int hash = 0;

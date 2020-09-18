@@ -1,7 +1,8 @@
 <?xml version='1.0' encoding='UTF-8' ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html">
 
     <body>
 
@@ -17,7 +18,7 @@
                                 </div>
                                 <div class="cart-table clearfix">
                                     <div class="row">
-                                        <div class="col-6">
+                                        <div class="col-12 col-lg-6">
                                             <div class="row">
                                                 <div class="col-4">
                                                     First name:
@@ -34,6 +35,54 @@
                                                     #{userManager.user.lname}
                                                 </div>
                                             </div>
+                                            <div class="row">
+                                                <div class="col-4">
+                                                    Address
+                                                </div>
+                                                <div class="col-8">
+                                                    #{userManager.user.address}
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-4">
+                                                    Country
+                                                </div>
+                                                <div class="col-8">
+                                                    #{userManager.user.country}
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-4">
+                                                    Email:
+                                                </div>
+                                                <div class="col-8">
+                                                    #{userManager.user.email}
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-12 col-lg-6">
+                                            <div class="row">
+                                                <div class="col-4">
+                                                    Username:
+                                                </div>
+                                                <div class="col-8">
+                                                    #{userManager.user.username}
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-4">
+                                                    Account Type:
+                                                </div>
+                                                <div class="col-8">
+                                                    #{userManager.user.roleId.rolename}
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row mt-50">
+                                        <div class="col-12">
+                                            <h:button outcome="/editaccount" value="Edit information" styleClass="btn amado-btn" />
+                                            <h:button outcome="/myorders" value="My Orders" styleClass="btn amado-btn" />
                                         </div>
                                     </div>
                                 </div>

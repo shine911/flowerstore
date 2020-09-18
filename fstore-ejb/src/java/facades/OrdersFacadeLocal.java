@@ -29,5 +29,6 @@ public interface OrdersFacadeLocal {
     List<Orders> findRange(int[] range);
 
     int count();
-    
+    //Workaround users and orders
+    List<Orders> findByUser(Object id);
 }

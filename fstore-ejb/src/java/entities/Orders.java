@@ -7,6 +7,7 @@ package entities;
 
 import java.io.Serializable;
 import java.util.Collection;
+import java.util.Date;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -19,6 +20,8 @@ import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
 
@@ -34,7 +37,10 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Orders.findById", query = "SELECT o FROM Orders o WHERE o.id = :id"),
     @NamedQuery(name = "Orders.findByOrdersState", query = "SELECT o FROM Orders o WHERE o.ordersState = :ordersState"),
     @NamedQuery(name = "Orders.findByDiscountValue", query = "SELECT o FROM Orders o WHERE o.discountValue = :discountValue"),
-    @NamedQuery(name = "Orders.findByTotalValue", query = "SELECT o FROM Orders o WHERE o.totalValue = :totalValue")})
+    @NamedQuery(name = "Orders.findByTotalValue", query = "SELECT o FROM Orders o WHERE o.totalValue = :totalValue"),
+    @NamedQuery(name = "Orders.findByOrderDate", query = "SELECT o FROM Orders o WHERE o.orderDate = :orderDate"),
+    @NamedQuery(name = "Orders.findByCusId", query = "SELECT o FROM Orders o WHERE o.cusId = :cusId"),
+})
 public class Orders implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -52,6 +58,9 @@ public class Orders implements Serializable {
     private Double totalValue;
     @OneToMany(mappedBy = "ordersId")
     private Collection<OrdersDetails> ordersDetailsCollection;
+    @Column(name = "order_date")
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date orderDate;
     @JoinColumn(name = "promo_id", referencedColumnName = "id")
     @ManyToOne
     private Promo promoId;
@@ -98,13 +107,12 @@ public class Orders implements Serializable {
         this.totalValue = totalValue;
     }
 
-    @XmlTransient
-    public Collection<OrdersDetails> getOrdersDetailsCollection() {
-        return ordersDetailsCollection;
+    public Date getOrderDate() {
+        return orderDate;
     }
 
-    public void setOrdersDetailsCollection(Collection<OrdersDetails> ordersDetailsCollection) {
-        this.ordersDetailsCollection = ordersDetailsCollection;
+    public void setOrderDate(Date orderDate) {
+        this.orderDate = orderDate;
     }
 
     public Promo getPromoId() {
@@ -143,9 +151,18 @@ public class Orders implements Serializable {
         return true;
     }
 
+    @XmlTransient
+    public Collection<OrdersDetails> getOrdersDetailsCollection() {
+        return ordersDetailsCollection;
+    }
+
+    public void setOrdersDetailsCollection(Collection<OrdersDetails> ordersDetailsCollection) {
+        this.ordersDetailsCollection = ordersDetailsCollection;
+    }
+
     @Override
     public String toString() {
         return "entities.Orders[ id=" + id + " ]";
     }
-    
+
 }
