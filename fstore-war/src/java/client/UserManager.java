@@ -10,6 +10,7 @@ import entities.Userinfo;
 import facades.OrdersDetailsFacadeLocal;
 import facades.OrdersFacadeLocal;
 import facades.UserinfoFacadeLocal;
+import helper.UtilsHelper;
 import javax.inject.Named;
 import javax.enterprise.context.SessionScoped;
 import java.io.Serializable;
@@ -71,8 +72,9 @@ public class UserManager implements Serializable {
         return getCurrent;
     }
     
-    public String refresh(){
+    public void refresh(){
         this.user = userinfoFacade.find(this.user.getId());
-        return "/";
+        UtilsHelper helper = new UtilsHelper();
+        helper.moveToPage("/");
     }
 }

@@ -15,9 +15,20 @@
  */
 package admin.dashboard;
 
+import entities.Orders;
+import entities.Product;
+import facades.CategoryFacadeLocal;
+import facades.OrdersDetailsFacadeLocal;
+import facades.OrdersFacadeLocal;
+import facades.ProductFacadeLocal;
+import facades.UserinfoFacadeLocal;
 import java.io.Serializable;
+import java.util.List;
+import java.util.stream.Collectors;
+import javax.ejb.EJB;
 import javax.inject.Named;
 import javax.faces.view.ViewScoped;
+import javax.persistence.criteria.Order;
 
 /**
  *
@@ -27,10 +38,52 @@ import javax.faces.view.ViewScoped;
 @ViewScoped
 public class DashboardView implements Serializable{
 
+    @EJB
+    private OrdersDetailsFacadeLocal ordersDetailsFacade;
+
+    @EJB
+    private ProductFacadeLocal productFacade;
+
+    @EJB
+    private OrdersFacadeLocal ordersFacade;
+
+    @EJB
+    private CategoryFacadeLocal categoryFacade;
+
+    @EJB
+    private UserinfoFacadeLocal userinfoFacade;
+    
     /**
      * Creates a new instance of DashboardView
      */
     public DashboardView() {
     }
     
+    public Integer countOrder(){
+        return ordersFacade.count();
+    }
+    public Integer countProduct(){
+        return productFacade.count();
+    }
+    public Integer countCategory(){
+        return categoryFacade.count();
+    }
+    public Integer countUsers(){
+        return userinfoFacade.count();
+    }
+    
+    public List<Product> getTopProductsList(){
+        List<Product> databaseList = productFacade.findAll();
+        databaseList.sort(
+                (Product p1, Product p2) -> Integer.compare(p1.getOrdersDetailsCollection().size(),p2.getOrdersDetailsCollection().size())
+        );
+        return databaseList.stream().limit(5).collect(Collectors.toList());
+    }
+    
+    public long getPercentOrderState(int id){
+        List<Orders> listOrders = ordersFacade.findAll();
+        long currentState = listOrders.stream().filter(x->x.getOrdersState()==id).count();
+        System.out.println(currentState);
+        return (currentState*100/listOrders.size());
+    }
 }
