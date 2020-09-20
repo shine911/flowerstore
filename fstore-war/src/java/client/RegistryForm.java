@@ -72,7 +72,7 @@ public class RegistryForm implements Serializable {
         System.out.println(this.password);
         user.setPassword(helper.md5Hash(this.password));
         //set roles
-        user.setRoleId(this.rolesFacade.find(0));
+        user.setRoleId(this.rolesFacade.find(1));
         if (user.getUsername()!=null) {
             this.userinfoFacade.create(user);
             Ajax.oncomplete("alert('Your account is created!');");

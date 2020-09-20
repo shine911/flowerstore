@@ -1,0 +1,126 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <body>
+
+        <ui:composition template="./../../WEB-INF/template/admin/template.xhtml">
+
+            <ui:define name="content">
+
+                <div class="">
+                    <div class="clearfix"></div>
+                    <div class="row">
+                        <div class="col-md-12 col-sm-12">
+                            <div class="x_panel">
+                                <div class="x_title">
+                                    <h2>Personal Info</h2>
+                                    <ul class="nav navbar-right panel_toolbox">
+                                        <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                                        </li>
+                                        <li class="dropdown">
+                                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-wrench"></i></a>
+                                            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+
+                                            </div>
+                                        </li>
+                                        <li><a><i class="fa fa-close"></i></a>
+                                        </li>
+                                    </ul>
+                                    <div class="clearfix"></div>
+                                </div>
+                                <div class="x_content">
+                                    <h:form>
+                                        <div class="item form-group">
+                                            <label class="col-form-label col-md-3 col-sm-3 label-align" for="last-name">Last Name <span class="required">*</span>
+                                            </label>
+                                            <div class="col-md-6 col-sm-6">
+                                                <h:inputText class="form-control" value="#{customerFunction.currentUser.lname}"  />
+                                            </div>
+                                        </div>
+                                        <div class="item form-group">
+                                            <label class="col-form-label col-md-3 col-sm-3 label-align" for="first-name">First Name <span class="required">*</span>
+                                            </label>
+                                            <div class="col-md-6 col-sm-6 ">
+                                                <h:inputText class="form-control" value="#{customerFunction.currentUser.fname}" />
+                                            </div>
+                                        </div>
+                                        <div class="field item form-group">
+                                            <label class="col-form-label col-md-3 col-sm-3  label-align"> Address<span class="required">*</span></label>
+                                            <div class="col-md-6 col-sm-6">
+                                                <h:inputTextarea class="form-control" value="#{customerFunction.currentUser.address}" />
+                                            </div>
+                                        </div>
+                                        <div class="field item form-group">
+                                            <label class="col-form-label col-md-3 col-sm-3  label-align">Email<span class="required">*</span></label>
+                                            <div class="col-md-6 col-sm-6">
+                                                <h:inputText class="form-control" value="#{customerFunction.currentUser.email}" />
+                                            </div>
+
+                                        </div>
+                                        <div class="field item form-group">
+                                            <label class="col-form-label col-md-3 col-sm-3  label-align">Country<span class="required">*</span></label>
+                                            <div class="col-md-6 col-sm-6">
+                                                <h:inputText class="form-control" value="#{customerFunction.currentUser.country}" />
+                                            </div>
+                                        </div>
+                                        <div class="field item form-group">
+                                            <label class="col-form-label col-md-3 col-sm-3  label-align">Zip code<span class="required">*</span></label>
+                                            <div class="col-md-6 col-sm-6">
+                                                <input class="form-control" type="text" name="zipcde" value="95000" />
+
+                                            </div>
+                                        </div>
+                                        <div class="field item form-group">
+                                            <label class="col-form-label col-md-3 col-sm-3  label-align">Telephone<span class="required">*</span></label>
+                                            <div class="col-md-6 col-sm-6">
+                                                <h:inputText class="form-control" value="#{customerFunction.currentUser.phone}" />
+                                            </div>
+                                        </div>
+                                        <div class="field item form-group">
+                                            <label class="col-form-label col-md-3 col-sm-3  label-align">Username<span class="required">*</span></label>
+                                            <div class="col-md-6 col-sm-6">
+                                                <h:inputText class="form-control" value="#{customerFunction.currentUser.username}" />
+                                            </div>
+                                        </div>
+                                        <div class="field item form-group">
+                                            <label class="col-form-label col-md-3 col-sm-3  label-align">Password<span class="required">*</span></label>
+                                            <div class="col-md-6 col-sm-6">
+                                                <h:inputText class="form-control" value="#{customerFunction.currentUser.password}" />
+                                            </div>
+                                        </div>
+                                        <div class="field item form-group">
+                                            <label class="col-form-label col-md-3 col-sm-3 label-align">Roles</label>
+                                            <div class="col-md-6 col-sm-6">
+                                                <h:selectOneMenu value="#{customerFunction.r}">
+                                                    <f:selectItems value="#{customerFunction.roles}" var="role"
+                                                                   itemValue="#{role.id}"
+                                                                   itemLabel="#{role.rolename}"
+                                                                   />
+                                                </h:selectOneMenu>
+                                            </div>
+                                        </div>
+                                        <div class="ln_solid">
+                                            <div class="form-group">
+                                                <div class="col-md-6 offset-md-3 mt-3">
+                                                    <h:commandButton styleClass="btn btn-primary" action="#{customerFunction.createSingleUserFormPost()}" value="Submit" />
+                                                    <h:button styleClass="btn btn-secondary" value="Back" outcome="view"/>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </h:form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </ui:define>
+
+        </ui:composition>
+
+    </body>
+</html>

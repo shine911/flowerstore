@@ -36,5 +36,11 @@ public class OrdersFacade extends AbstractFacade<Orders> implements OrdersFacade
         TypedQuery<Orders> q = em.createNamedQuery("Orders.findByCusId", Orders.class);
         return q.setParameter("cusId", id).getResultList();
     }
+
+    @Override
+    public List<Orders> findByTotalValue(Double pTotalValue) {
+        TypedQuery<Orders> q = em.createNamedQuery("Orders.findByTotalValue", Orders.class);
+        return q.setParameter("totalValue", pTotalValue).getResultList();
+    }
     
 }

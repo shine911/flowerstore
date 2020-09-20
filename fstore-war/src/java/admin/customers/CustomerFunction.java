@@ -15,15 +15,17 @@
  */
 package admin.customers;
 
+import entities.Roles;
 import entities.Userinfo;
+import facades.RolesFacadeLocal;
 import facades.UserinfoFacadeLocal;
+import helper.UtilsHelper;
 import javax.inject.Named;
 import javax.enterprise.context.SessionScoped;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 import javax.ejb.EJB;
-import javax.inject.Inject;
-import org.omnifaces.cdi.Param;
 
 /**
  *
@@ -34,9 +36,19 @@ import org.omnifaces.cdi.Param;
 public class CustomerFunction implements Serializable {
 
     @EJB
+    private RolesFacadeLocal rolesFacade;
+
+    @EJB
     private UserinfoFacadeLocal userinfoFacade;
 
     private List<Userinfo> customerList;
+    
+    private List<Userinfo> searchList;
+    
+    private Userinfo currentUser;
+    private String searchString;
+    private List<Roles> roles;
+    private int roleId;
     
     /**
      * Creates a new instance of CustomerFunction
@@ -53,9 +65,95 @@ public class CustomerFunction implements Serializable {
         this.customerList = customerList;
     }
     
-    public Userinfo getSingleCustomer(@Param(name = "id") int id){
-        return userinfoFacade.find(id);
+    public String viewSingleCustomer(int id){
+        this.currentUser = userinfoFacade.find(id);
+        return "/admin/customers/view";
+    }
+    public void editSingleUserFormPost(){
+        UtilsHelper helper = new UtilsHelper();
+        currentUser.setPassword(helper.md5Hash(currentUser.getPassword()));
+        userinfoFacade.edit(currentUser);
     }
     
+    public String deleteSingleUserFormPost(){
+        userinfoFacade.remove(currentUser);
+        return "index";
+    }
     
+    //Create get
+    public String createSingleUser(){
+        this.currentUser = new Userinfo();
+        return "create";
+    }
+    //Create form post
+    public String createSingleUserFormPost(){
+        UtilsHelper helper = new UtilsHelper();
+        currentUser.setPassword(helper.md5Hash(currentUser.getPassword()));
+        //Get roles
+        for(int i = 0; i<this.roles.size(); i++){
+            if(roles.get(i).getId() == this.roleId){
+                this.currentUser.setRoleId(roles.get(i));
+                break;
+            }
+        }
+        this.userinfoFacade.create(this.currentUser);
+        return "index";
+    }
+    
+    public String searchCustomer(){
+        this.searchList = new ArrayList<>();
+        for(int i = 0; i<this.customerList.size(); i++){
+            if(this.customerList.get(i).getFname().contains(searchString) || this.customerList.get(i).getLname().contains(searchString) ){
+                this.searchList.add(this.customerList.get(i));
+            }
+        }
+        return "search";
+    }
+    
+    public Userinfo getCurrentUser() {
+        return currentUser;
+    }
+
+    public void setCurrentUser(Userinfo currentUser) {
+        this.currentUser = currentUser;
+    }
+    
+    public String editSingleUser(){
+        return "edit";
+    }
+
+    public List<Roles> getRoles() {
+        this.roles = this.rolesFacade.findAll();
+        return roles;
+    }
+
+    public void setRoles(List<Roles> roles) {
+        this.roles = roles;
+    }
+
+    public int getRoleId() {
+        return roleId;
+    }
+
+    public void setRoleId(int roleId) {
+        this.roleId = roleId;
+    }
+
+    public List<Userinfo> getSearchList() {
+        return searchList;
+    }
+
+    public void setSearchList(List<Userinfo> searchList) {
+        this.searchList = searchList;
+    }
+
+    public String getSearchString() {
+        return searchString;
+    }
+
+    public void setSearchString(String searchString) {
+        this.searchString = searchString;
+    }
+    
+
 }

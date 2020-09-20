@@ -31,4 +31,6 @@ public interface OrdersFacadeLocal {
     int count();
     //Workaround users and orders
     List<Orders> findByUser(Object id);
+    
+    List<Orders> findByTotalValue(Double pTotalValue);
 }

@@ -1,0 +1,86 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+      xmlns:h="http://xmlns.jcp.org/jsf/html">
+
+    <body>
+
+        <ui:composition template="./../../WEB-INF/template/admin/template.xhtml">
+            <ui:define name="content">
+
+
+                <h:form>
+                    <div class="row justify-content-between">
+                        <div class="col-12 col-lg-6">
+                            <h:commandLink styleClass="btn btn-primary" title="Create" action="#{customerFunction.createSingleUser()}">
+                                <i class="fa fa-plus"></i>
+                            </h:commandLink>
+                        </div>
+                        <div class="col-12 col-lg-6 text-right d-flex">
+                            <h:inputText value="#{customerFunction.searchString}"  class="form-control" />
+                            <h:commandLink class="btn btn-primary" action="#{customerFunction.searchCustomer}">
+                                <i class="fa fa-search"></i>
+                            </h:commandLink>
+                        </div>
+                    </div>
+                </h:form>
+
+
+                <div class="">
+                    <div class="clearfix"></div>
+                    <div class="col-md-21 col-sm-21">
+                        <div class="x_panel">
+                            <div class="x_title">
+                                <h2>Account table</h2>
+                                <div class="clearfix"></div>
+                            </div>
+                            <div class="x_content">
+
+                                <table class="table table-striped">
+
+                                    <thead>
+                                        <tr>
+                                            <th>ID</th>
+                                            <th>Last Name</th>
+                                            <th>First Name</th>
+                                            <th>Email</th>
+                                            <th>Phone</th>
+                                            <th>Username</th>
+                                            <th>Action</th>
+                                        </tr>           
+                                    </thead>
+
+                                    <tbody>
+                                        <c:forEach var="user" varStatus="status" items="#{customerFunction.searchList}">
+                                            <tr>
+                                                <td>#{status.index}</td>
+                                                <td>#{user.lname}</td>
+                                                <td>#{user.fname}</td>
+                                                <td>#{user.email}</td>
+                                                <td>#{user.phone}</td>
+                                                <td>#{user.username}</td>
+                                                <td>
+                                                    <h:form>
+                                                        <h:commandLink title="View info" action="#{customerFunction.viewSingleCustomer(user.id)}" styleClass="btn btn-primary">
+                                                            <i class="fa fa-info"></i>
+                                                        </h:commandLink>
+                                                    </h:form>
+                                                </td>
+                                            </tr>
+                                        </c:forEach>
+                                    </tbody>
+                                </table>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </ui:define>
+
+        </ui:composition>
+
+    </body>
+</html>

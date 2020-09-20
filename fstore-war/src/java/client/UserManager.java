@@ -6,7 +6,6 @@
 package client;
 
 import entities.Orders;
-import entities.OrdersDetails;
 import entities.Userinfo;
 import facades.OrdersDetailsFacadeLocal;
 import facades.OrdersFacadeLocal;
@@ -14,7 +13,6 @@ import facades.UserinfoFacadeLocal;
 import javax.inject.Named;
 import javax.enterprise.context.SessionScoped;
 import java.io.Serializable;
-import java.util.Collection;
 import java.util.List;
 import java.util.stream.Collectors;
 import javax.ejb.EJB;
@@ -73,7 +71,8 @@ public class UserManager implements Serializable {
         return getCurrent;
     }
     
-    public void refresh(){
+    public String refresh(){
         this.user = userinfoFacade.find(this.user.getId());
+        return "/";
     }
 }

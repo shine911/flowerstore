@@ -1,0 +1,46 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html">
+    <h:body styleClass="nav-md">
+        <ui:composition xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                        template="../../WEB-INF/template/admin/template.xhtml">
+
+            <ui:define name="content">
+
+                <!-- form input mask -->
+
+                <div class="row">
+                    <div class="col-md-12 col-sm-12">
+                        <div class="x_panel">
+
+                            <div class="x_content">
+                                <span class="section">Name Product: #{ordersDetailsMB.productId.name}</span>
+                                <h:form>
+                                    <div class="field item form-group">
+                                        <h:outputText styleClass="col-form-label col-md-3 col-sm-3  label-align" value="Qty"/>
+                                        <div class="col-md-6 col-sm-6">
+                                            <h:inputText styleClass="form-control" id="qty" value="#{ordersDetailsMB.qty}"/>
+                                        </div>
+                                    </div>
+                                    <div class="ln_solid">
+                                        <div class="form-group">
+                                            <div class="col-md-6 offset-md-3">
+                                                <h:commandButton styleClass="btn btn-primary" value="Edit" action="#{ordersDetailsMB.editOrdersDetails()}"/>
+                                                <button type='reset' class="btn btn-success">Reset</button>
+                                            </div>                  
+                                        </div>
+                                    </div>
+                                </h:form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+            </ui:define>
+
+        </ui:composition>
+    </h:body>
+
+</html>

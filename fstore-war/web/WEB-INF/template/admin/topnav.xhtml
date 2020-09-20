@@ -11,13 +11,12 @@
                 <ul class=" navbar-right">
                     <li class="nav-item dropdown open" style="padding-left: 15px;">
                         <a href="javascript:;" class="user-profile dropdown-toggle" aria-haspopup="true" id="navbarDropdown" data-toggle="dropdown" aria-expanded="false">
-                            <h:graphicImage name="admin/images/img.jpg" alt="" />John Doe
+                            <h:graphicImage name="admin/images/img.jpg" alt="" />#{userManager.user.fname}
                         </a>
                         <div class="dropdown-menu dropdown-usermenu pull-right" aria-labelledby="navbarDropdown">
-                            <a class="dropdown-item"  href="javascript:;">
-                                <span>Settings</span>
-                            </a>
-                            <a class="dropdown-item"  href="login.html"><i class="fa fa-sign-out pull-right"></i> Log Out</a>
+                            <h:form>
+                                <h:commandLink class="dropdown-item"  action="#{userManager.logout()}"><i class="fa fa-sign-out pull-right"></i> Log Out</h:commandLink>
+                            </h:form>
                         </div>
                     </li>
                 </ul>

@@ -14,17 +14,19 @@
                                 <div class="cart-title"><h2>Login</h2></div>
                                 <div class="cart-table clearfix">
                                     <div class="row">
-                                        <h:form prependId="false">
-                                            <div class="form-group">
-                                                <h:outputLabel value="Username" for="username" />
-                                                <h:inputText styleClass="form-control" id="username" value="#{loginBean.username}" />
-                                            </div>
-                                            <div class="form-group">
-                                                <h:outputLabel value="Password" for="password"/>
-                                                <h:inputSecret styleClass="form-control" id="password" value="#{loginBean.password}" />
-                                            </div>
-                                            <h:commandButton id="submit" styleClass="btn amado-btn" value="Login" action="#{loginBean.login}"></h:commandButton>
-                                        </h:form>
+                                        <div class="col-8">
+                                            <h:form prependId="false">
+                                                <div class="form-group">
+                                                    <h:outputLabel value="Username" for="username" />
+                                                    <h:inputText styleClass="form-control" id="username" value="#{loginBean.username}" />
+                                                </div>
+                                                <div class="form-group">
+                                                    <h:outputLabel value="Password" for="password"/>
+                                                    <h:inputSecret styleClass="form-control" id="password" value="#{loginBean.password}" />
+                                                </div>
+                                                <h:commandButton id="submit" styleClass="btn amado-btn" value="Login" action="#{loginBean.login}"></h:commandButton>
+                                            </h:form>
+                                        </div>
                                     </div>
                                 </div>
                             </div>

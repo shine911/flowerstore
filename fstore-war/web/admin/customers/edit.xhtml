@@ -37,37 +37,33 @@
                                             <label class="col-form-label col-md-3 col-sm-3 label-align" for="last-name">Last Name <span class="required">*</span>
                                             </label>
                                             <div class="col-md-6 col-sm-6">
-                                                <h:inputText class="form-control" value="#{customerFunction.getSingleCustomer()}"  />
+                                                <h:inputText class="form-control" value="#{customerFunction.currentUser.lname}"  />
                                             </div>
                                         </div>
                                         <div class="item form-group">
                                             <label class="col-form-label col-md-3 col-sm-3 label-align" for="first-name">First Name <span class="required">*</span>
                                             </label>
                                             <div class="col-md-6 col-sm-6 ">
-                                                <input type="text" id="first-name" name="first-name" class="form-control" value="test"></input>
-
+                                                <h:inputText class="form-control" value="#{customerFunction.currentUser.fname}" />
                                             </div>
                                         </div>
                                         <div class="field item form-group">
                                             <label class="col-form-label col-md-3 col-sm-3  label-align"> Address<span class="required">*</span></label>
                                             <div class="col-md-6 col-sm-6">
-                                                <input class="form-control " type="text" name="address" value="1st Ly Tu Trong street Ninh Kieu Can Tho" />
-
+                                                <h:inputTextarea class="form-control" value="#{customerFunction.currentUser.address}" />
                                             </div>
                                         </div>
                                         <div class="field item form-group">
-                                            <label class="col-form-label col-md-3 col-sm-3  label-align">email<span class="required">*</span></label>
+                                            <label class="col-form-label col-md-3 col-sm-3  label-align">Email<span class="required">*</span></label>
                                             <div class="col-md-6 col-sm-6">
-                                                <input class="form-control email" name="email"  type="email"  value="admin@flowerstore.app"/>
-
+                                                <h:inputText class="form-control" value="#{customerFunction.currentUser.email}" />
                                             </div>
 
                                         </div>
                                         <div class="field item form-group">
                                             <label class="col-form-label col-md-3 col-sm-3  label-align">Country<span class="required">*</span></label>
                                             <div class="col-md-6 col-sm-6">
-                                                <input class="form-control country" type="text" name="country" value="Vietnam" />
-
+                                                <h:inputText class="form-control" value="#{customerFunction.currentUser.country}" />
                                             </div>
                                         </div>
                                         <div class="field item form-group">
@@ -80,22 +76,27 @@
                                         <div class="field item form-group">
                                             <label class="col-form-label col-md-3 col-sm-3  label-align">Telephone<span class="required">*</span></label>
                                             <div class="col-md-6 col-sm-6">
-                                                <input class="form-control tel" type="tel" name="phone" data-validate-length-range="8,20" value="0999999999" />
-
+                                                <h:inputText class="form-control" value="#{customerFunction.currentUser.phone}" />
                                             </div>
                                         </div>
                                         <div class="field item form-group">
                                             <label class="col-form-label col-md-3 col-sm-3  label-align">Username<span class="required">*</span></label>
                                             <div class="col-md-6 col-sm-6">
-                                                <input class="form-control" data-validate-length-range="6" data-validate-words="2" name="name" required="required" value="admin"/>
-
+                                                <h:inputText class="form-control" value="#{customerFunction.currentUser.username}" />
                                             </div>
                                         </div>
-
+                                        <div class="field item form-group">
+                                            <label class="col-form-label col-md-3 col-sm-3  label-align">Password<span class="required">*</span></label>
+                                            <div class="col-md-6 col-sm-6">
+                                                <h:inputText class="form-control" value="#{customerFunction.currentUser.password}" />
+                                            </div>
+                                        </div>
                                         <div class="ln_solid">
                                             <div class="form-group">
-                                                <div class="col-md-6 offset-md-3">
-                                                    <button type='submit' class="btn btn-info btn-xs"><i class="fa fa-pencil"></i> Edit</button>
+                                                <div class="col-md-6 offset-md-3 mt-3">
+                                                    <h:commandButton styleClass="btn btn-primary" action="#{customerFunction.editSingleUserFormPost()}" value="Submit" />
+                                                    <h:commandButton styleClass="btn btn-danger" action="#{customerFunction.deleteSingleUserFormPost()}" value="Delete" />
+                                                    <h:button styleClass="btn btn-secondary" value="Back" outcome="view"/>
                                                 </div>
                                             </div>
                                         </div>
