@@ -15,31 +15,20 @@
                         <div class="x_panel">
 
                             <div class="x_content">
-                                <span class="section">Name Product: #{ordersMb.cusId.lname}</span>
+                                <span class="section">Name Customer: #{ordersMb.cusId.fname}</span>
                                 <h:form>
-                                    <div class="field item form-group">
-                                        <h:outputText styleClass="col-form-label col-md-3 col-sm-3  label-align" value="Discount"/>
-                                        <div class="col-md-6 col-sm-6">
-                                            <h:inputText styleClass="form-control" id="discount" value="#{ordersMb.discountValue}"/>
-                                        </div>
-                                    </div>
                                     <div class="field item form-group" >
                                         <h:outputText styleClass="col-form-label col-md-3 col-sm-3  label-align" value="Status"/>
                                         <div class="col-md-6 col-sm-6">
 <!--                                            <h:inputText styleClass="form-control" id="ordersState" value="#{ordersMb.ordersState}"/>   -->
                                             <h:inputText value="Pending" styleClass="form-control"  rendered="#{ordersMb.ordersState == 0}" />
-                                            <h:inputText value="Processing" styleClass="form-control"  rendered="#{ordersMb.ordersState == 1}" />
+                                            <h:inputText value="Preparing" styleClass="form-control"  rendered="#{ordersMb.ordersState == 1}" />
                                             <h:inputText value="Shipping" styleClass="form-control"  rendered="#{ordersMb.ordersState == 2}" />
                                             <h:inputText value="Done" styleClass="form-control"  rendered="#{ordersMb.ordersState == 3}" />
 
                                         </div>
                                         <div class="col-md-12 col-sm-12" >
-                                                <h:commandButton type="submit" class="btn btn-round btn-secondary" action="#{ordersMb.editOrder4()}" value="Pending"/>
-                                                <h:commandButton type="submit" class="btn btn-round btn-secondary" action="#{ordersMb.editOrder1()}" value="Processing"/>
-                                                <h:commandButton type="submit" class="btn btn-round btn-primary" action="#{ordersMb.editOrder2()}" value="Shipping"/>
-                                                <h:commandButton  type="submit" class="btn btn-round btn-success" action="#{ordersMb.editOrder3()}" value="Done"/>
-
-                                           
+                                                
                                             
                                         </div>
                                     </div>
@@ -47,8 +36,11 @@
                                     <div class="ln_solid">
                                         <div class="form-group">
                                             <div class="col-md-6 offset-md-3">
-                                                <h:commandButton styleClass="btn btn-primary" value="Edit" action="#{ordersMb.editOrder()}"/>
-                                                <button type='reset' class="btn btn-success">Reset</button>
+                                                <h:commandButton type="submit" class="btn btn-round btn-secondary" action="#{ordersMb.editOrder4()}" value="Pending"/>
+                                                <h:commandButton type="submit" class="btn btn-round btn-secondary" action="#{ordersMb.editOrder1()}" value="Processing"/>
+                                                <h:commandButton type="submit" class="btn btn-round btn-primary" action="#{ordersMb.editOrder2()}" value="Shipping"/>
+                                                <h:commandButton  type="submit" class="btn btn-round btn-success" action="#{ordersMb.editOrder3()}" value="Done"/>
+                                           
                                             </div>                  
                                         </div>
                                     </div>

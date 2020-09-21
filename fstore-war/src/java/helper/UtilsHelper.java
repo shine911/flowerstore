@@ -29,18 +29,7 @@ import javax.servlet.http.HttpServletRequest;
  *
  * @author quihuynh
  */
-public class UtilsHelper {
-
-    public void moveToPage(String page) {
-        try {
-            FacesContext context = FacesContext.getCurrentInstance();
-            HttpServletRequest origRequest = (HttpServletRequest) context.getExternalContext().getRequest();
-            String contextPath = origRequest.getContextPath();
-            context.getExternalContext().redirect(contextPath + page);
-        } catch (IOException ex) {
-            Logger.getLogger(ProductDetails.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }
+public class UtilsHelper{
 
     public String md5Hash(String input) {
         try {

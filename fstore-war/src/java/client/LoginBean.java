@@ -15,6 +15,8 @@ import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.annotation.PostConstruct;
+import javax.ejb.EJBException;
+import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 import javax.servlet.http.HttpServletRequest;
 import org.omnifaces.util.Faces;
@@ -47,21 +49,25 @@ public class LoginBean {
     }
 
     public void login() {
-        Userinfo user = usersFacade.findByUsername(this.username);
-        if (user != null) {
+        try {
+            Userinfo user = usersFacade.findByUsername(this.username);
             UtilsHelper helper = new UtilsHelper();
-            //Md5 hash password
             if (user.getPassword().equals(helper.md5Hash(this.password))) {
                 this.userManager.user = user;
                 this.moveToPage("/");
             }
+        } catch (EJBException ex) {
+            FacesMessage msg = new FacesMessage("login failed", "Username or password not correct!");
+            msg.setSeverity(FacesMessage.SEVERITY_ERROR);
+            FacesContext.getCurrentInstance().addMessage(null, msg);
         }
-        this.moveToPage("/login");
+        //this.moveToPage("/login");
     }
-    public void logout(){
+
+    public void logout() {
         this.userManager.user = null;
     }
-    
+
     private void moveToPage(String page) {
         try {
             FacesContext context = FacesContext.getCurrentInstance();

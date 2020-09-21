@@ -26,7 +26,7 @@
                                         <div class="  form-group pull-right top_search">
                                             <div class="input-group">    
                                                 <h:form>
-                                                    <h:inputText style="margin-right:px; width: 200px " id="totalValue" class="form-control" value="#{ordersMb.totalValue}"/>
+                                                    <h:inputText style="margin-right:px; width: 200px " id="totalValue" class="form-control" value="#{ordersMb.search}"/>
                                                     <span class="input-group-btn">
 
                                                         <h:commandButton styleClass="btn btn-secondary" style="margin-left: 200px;margin-top:-55px;" type="submit" value="Go!" action="#{ordersMb.findByTotalValue()}"/>
@@ -37,8 +37,7 @@
                                     </div>
                                 </div>
                                 <div class="clearfix"></div>
-                                <c:if test="#{ordersMb.listOrder.size() != 0}">
-
+                                <c:if test="#{ordersMb.listOrder.size() > 0}">
                                     <div class="row">
                                         <div class="col-md-12">
                                             <div class="x_panel">
@@ -82,7 +81,7 @@
                                                         </h:column>
                                                         <h:column>
                                                             <f:facet name="header">Name</f:facet>
-                                                            <h:outputText value="#{item.cusId.lname}"/>
+                                                            <h:outputText value="#{item.cusId.fname}"/>
                                                         </h:column>
                                                         <h:column>
                                                             <f:facet name="header">Days</f:facet>
@@ -154,14 +153,17 @@
                                                             <h:commandButton action="#{ordersMb.editOrder(item.id)}" styleClass="btn btn-round btn-primary" value="Update" />
                                                         </h:form>
                                                     </h:column>
-
+                                                    <h:column>
+                                                        <f:facet name="header">ID</f:facet>
+                                                        <h:outputText value="#{item.id}"/>
+                                                    </h:column>
                                                     <h:column>
                                                         <f:facet name="header">Code</f:facet>
                                                         <h:outputText value="#{item.promoId.promoCode}"/>
                                                     </h:column>
                                                     <h:column>
                                                         <f:facet name="header">Name</f:facet>
-                                                        <h:outputText value="#{item.cusId.lname}"/>
+                                                        <h:outputText value="#{item.cusId.fname}"/>
                                                     </h:column>
                                                     <h:column>
                                                         <f:facet name="header">Days</f:facet>
@@ -171,7 +173,7 @@
                                                         <f:facet name="header">Status</f:facet>
 
                                                         <h:outputText value="Pending" rendered="#{item.ordersState == 0}" />
-                                                        <h:outputText value="Processing" rendered="#{item.ordersState == 1}" />
+                                                        <h:outputText value="Preparing" rendered="#{item.ordersState == 1}" />
                                                         <h:outputText value="Shipping" rendered="#{item.ordersState == 2}" />
                                                         <h:outputText value="Done" rendered="#{item.ordersState == 3}" />
 
@@ -186,22 +188,7 @@
                                                     </h:column>
 
                                                 </h:dataTable>
-                                                <div class="btn-toolbar" role="toolbar" aria-label="Toolbar with button groups">
-                                                    <div class="btn-group mr-2" style="margin-left: 780px;" role="group" aria-label="First group">
-                                                        <button type="button" class="btn btn-secondary">1</button>
-                                                        <button type="button" class="btn btn-secondary">2</button>
-                                                        <button type="button" class="btn btn-secondary">3</button>
-                                                        <button type="button" class="btn btn-secondary">4</button>
-                                                        <button type="button" class="btn btn-secondary">5</button>
-                                                        <button type="button" class="btn btn-secondary">6</button>
-                                                        <button type="button" class="btn btn-secondary">7</button>
-                                                        <button type="button" class="btn btn-secondary">8</button>
-                                                        <button type="button" class="btn btn-secondary">9</button>
-                                                        <button type="button" class="btn btn-secondary">10</button>
-
-                                                    </div>
-
-                                                </div>
+                                                
                                             </div>
 
                                         </div>

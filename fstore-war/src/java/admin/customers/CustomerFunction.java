@@ -70,8 +70,6 @@ public class CustomerFunction implements Serializable {
         return "/admin/customers/view";
     }
     public void editSingleUserFormPost(){
-        UtilsHelper helper = new UtilsHelper();
-        currentUser.setPassword(helper.md5Hash(currentUser.getPassword()));
         userinfoFacade.edit(currentUser);
     }
     

@@ -5,20 +5,24 @@
  */
 package admin.orders;
 
+import client.ProductDetails;
 import entities.Orders;
 import entities.OrdersDetails;
 import entities.Product;
 import facades.OrdersDetailsFacadeLocal;
 import facades.OrdersFacadeLocal;
 import facades.ProductFacadeLocal;
-import helper.UtilsHelper;
+import java.io.IOException;
 import javax.inject.Named;
 import javax.enterprise.context.SessionScoped;
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import java.util.stream.Collectors;
 import javax.ejb.EJB;
+import javax.faces.context.FacesContext;
+import javax.servlet.http.HttpServletRequest;
 
 /**
  *
@@ -36,10 +40,7 @@ public class OrdersDetailsMB implements Serializable {
 
     @EJB
     private OrdersDetailsFacadeLocal ordersDetailsFacade;
-    
-    
-    
-    
+
     public OrdersDetailsMB() {
     }
     private int id;
@@ -79,7 +80,7 @@ public class OrdersDetailsMB implements Serializable {
     public void setProductId(Product productId) {
         this.productId = productId;
     }
-    
+
     public OrdersDetailsFacadeLocal getOrdersDetailsFacade() {
         return ordersDetailsFacade;
     }
@@ -110,15 +111,14 @@ public class OrdersDetailsMB implements Serializable {
 
     public void setOrderDetailList(List<OrdersDetails> orderDetailList) {
         this.orderDetailList = orderDetailList;
-    }   
-    
-    
-    public List<OrdersDetails> showAllOrdersDetailses(int id){
-        
+    }
+
+    public List<OrdersDetails> showAllOrdersDetailses(int id) {
+
         return ordersFacade.find(id).getOrdersDetailsCollection().stream().collect(Collectors.toList());
     }
-    
-    public String editOrdersDetails(int idOrders){
+
+    public String editOrdersDetails(int idOrders) {
         id = idOrders;
         //Bien orders
         ordersId = ordersDetailsFacade.find(idOrders).getOrdersId();
@@ -126,10 +126,10 @@ public class OrdersDetailsMB implements Serializable {
         qty = ordersDetailsFacade.find(idOrders).getQty();
         return "edit";
     }
-    
-    public void editOrdersDetails(){
+
+    public void editOrdersDetails() {
         OrdersDetails ordersDetails = ordersId.getOrdersDetailsCollection()
-                .stream().filter(x->x.getId() == id)
+                .stream().filter(x -> x.getId() == id)
                 .findFirst()
                 .get();
 
@@ -137,34 +137,41 @@ public class OrdersDetailsMB implements Serializable {
         //ordersDetails.setProductId(productId);
         //O day khi cap nhat so luong chung ta se cap lai gia
         ordersDetails.setQty(qty);
-        
-        
+
         List<OrdersDetails> orderList = ordersId.getOrdersDetailsCollection().stream().collect(Collectors.toList());
         double price = 0;
-        for(OrdersDetails ord: orderList){
-            price += ord.getQty() * ord.getProductId().getPrice();
-        }
+        price = orderList.stream().map(ord -> ord.getQty() * ord.getProductId().getPrice()).reduce(price, (accumulator, _item) -> accumulator + _item);
         //Cap nhat gia
         this.ordersId.setTotalValue(price);
         ordersDetailsFacade.edit(ordersDetails);
         ordersFacade.edit(ordersId);
         this.ordersId = ordersFacade.find(ordersId.getId());
-        UtilsHelper helper = new UtilsHelper();
-        helper.moveToPage("/admin/order/view");
+        moveToPage("/admin/order/view");
     }
-    
-    
-    public String deleteOrdersDetails(int idOrders){
+
+    public String deleteOrdersDetails(int idOrders) {
         OrdersDetails ordersDetails = ordersDetailsFacade.find(idOrders);
         ordersDetailsFacade.remove(ordersDetails);
         return "view";
     }
-    public String addOrderDetails(){
+
+    public String addOrderDetails() {
         OrdersDetails ordersDetails = new OrdersDetails();
         ordersDetails.setOrdersId(ordersId);
         ordersDetails.setProductId(productId);
         ordersDetails.setQty(qty);
         ordersDetailsFacade.create(ordersDetails);
         return "invoice";
+    }
+
+    public void moveToPage(String page) {
+        try {
+            FacesContext context = FacesContext.getCurrentInstance();
+            HttpServletRequest origRequest = (HttpServletRequest) context.getExternalContext().getRequest();
+            String contextPath = origRequest.getContextPath();
+            context.getExternalContext().redirect(contextPath + page);
+        } catch (IOException ex) {
+            Logger.getLogger(ProductDetails.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 }

@@ -2,7 +2,8 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://java.sun.com/jsf/html"
-      xmlns:f="http://xmlns.jcp.org/jsf/core">
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
     <h:body>
         <ui:composition xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
                         template="../../WEB-INF/template/admin/template.xhtml">
@@ -16,17 +17,6 @@
                                 <div class="page-title">
                                     <div class="title_left">
                                         <h3>Invoice <small>Some examples to get you started</small></h3>
-                                    </div>
-
-                                    <div class="title_right">
-                                        <div class="col-md-5 col-sm-5   form-group pull-right top_search">
-                                            <div class="input-group">
-                                                <input type="text" class="form-control" placeholder="Search for..."/>
-                                                <span class="input-group-btn">
-                                                    <button class="btn btn-secondary" type="button">Go!</button>
-                                                </span>
-                                            </div>
-                                        </div>
                                     </div>
                                 </div>
 
@@ -126,14 +116,14 @@
                                                                 <h:column>
                                                                     <f:facet name="header">Status</f:facet>
                                                                     <h:outputText value="Pending" rendered="#{item.ordersId.ordersState == 0}" />
-                                                                    <h:outputText value="Processing" rendered="#{item.ordersId.ordersState == 1}" />
+                                                                    <h:outputText value="Preparing" rendered="#{item.ordersId.ordersState == 1}" />
                                                                     <h:outputText value="Shipping" rendered="#{item.ordersId.ordersState == 2}" />
-                                                                    <h:outputText value="Complete" rendered="#{item.ordersId.ordersState == 3}" />
+                                                                    <h:outputText value="Done" rendered="#{item.ordersId.ordersState == 3}" />
                                                                 </h:column>
 
                                                                 <h:column>
                                                                     <f:facet name="header">SubTotal</f:facet>
-                                                                    <h:outputText value="#{item.ordersId.totalValue}"/>
+                                                                    <h:outputText value="$ #{item.productId.price * item.qty}"/>
                                                                 </h:column>
 
                                                                 <h:column>
@@ -152,22 +142,6 @@
                                                                 </h:column>
 
                                                             </h:dataTable>
-                                                            <div class="btn-toolbar" role="toolbar" aria-label="Toolbar with button groups">
-                                                                    <div class="btn-group mr-2" style="margin-left: 780px;" role="group" aria-label="First group">
-                                                                        <button type="button" class="btn btn-secondary">1</button>
-                                                                        <button type="button" class="btn btn-secondary">2</button>
-                                                                        <button type="button" class="btn btn-secondary">3</button>
-                                                                        <button type="button" class="btn btn-secondary">4</button>
-                                                                        <button type="button" class="btn btn-secondary">5</button>
-                                                                        <button type="button" class="btn btn-secondary">6</button>
-                                                                        <button type="button" class="btn btn-secondary">7</button>
-                                                                        <button type="button" class="btn btn-secondary">8</button>
-                                                                        <button type="button" class="btn btn-secondary">9</button>
-                                                                        <button type="button" class="btn btn-secondary">10</button>
-
-                                                                    </div>
-
-                                                                </div>
                                                         </div>
                                                         <!-- /.col -->
                                                     </div>
@@ -175,32 +149,26 @@
 
                                                     <div class="row">
                                                         <!-- accepted payments column -->
-                                                        <div class="col-md-6">
-                                                            <p class="lead">Payment Methods:</p>
-
-                                                            <p class="text-muted well well-sm no-shadow" style="margin-top: 10px;">
-                                                                Etsy doostang zoodles disqus groupon greplin oooj voxy zoodles, weebly ning heekya handango imeem plugg dopplr jibjab, movity jajah plickers sifteo edmodo ifttt zimbra.
-                                                            </p>
-                                                        </div>
                                                         <!-- /.col -->
-                                                        <div class="col-md-6">
-                                                            <p class="lead">Amount Due 2/22/2014</p>
+                                                        <div class="col-md-6 offset-6">
+                                                            <p class="lead">Amount Due #{ordersDetailsMB.showAllOrdersDetailses(ordersMb.id)[0].ordersId.orderDate}</p>
                                                             <div class="table-responsive">
-                                                                <h:dataTable class="table" value="#{ordersDetailsMB.showAllOrdersDetailses(ordersMb.id)}" var="item">
-                                                                    <h:column>
-                                                                        <f:facet name="header">Subtotal</f:facet>
-                                                                        <h:outputText  value="#{item.ordersId.totalValue}$"/>
-                                                                    </h:column>
-                                                                    <h:column>
-                                                                        <f:facet name="header">Discount</f:facet>
-                                                                        <h:outputText value="#{item.ordersId.discountValue}%"/>
-                                                                    </h:column>
-                                                                    <h:column>
-                                                                        <f:facet name="header">Total</f:facet>
-                                                                        <h:outputText value="#{item.ordersId.totalValue -(item.ordersId.totalValue * item.ordersId.discountValue)/100}"/>
-                                                                    </h:column>
-                                                                </h:dataTable>
-                                                                
+                                                                <c:set value="#{ordersDetailsMB.showAllOrdersDetailses(ordersMb.id)[0]}" var="item" />
+                                                                <table class="table">
+                                                                        <tr>
+                                                                            <th>Subtotal</th>
+                                                                            <td>$ #{item.ordersId.totalValue}</td>
+                                                                        </tr>
+                                                                        <tr>
+                                                                            <th>Discount</th>
+                                                                            <td>$ #{item.ordersId.discountValue}</td>
+                                                                        </tr>
+                                                                        <tr>
+                                                                            <th>Total</th>
+                                                                            <td>$ #{item.ordersId.totalValue}</td>
+                                                                        </tr>
+                                                                    </table>
+
                                                             </div>
                                                         </div>
                                                         <!-- /.col -->
@@ -212,8 +180,6 @@
                                                         <div class=" ">
                                                             <a class="btn btn-default " href="index.html">Back</a>
                                                             <button class="btn btn-success " onclick="window.print();"><i class="fa fa-print"></i> Print</button>
-                                                            <button class="btn btn-success pull-right"><i class="fa fa-credit-card"></i> Submit Payment</button>
-                                                            <button class="btn btn-primary pull-right" style="margin-right: 5px;"><i class="fa fa-download"></i> Generate PDF</button>
 
                                                         </div>
                                                     </div>

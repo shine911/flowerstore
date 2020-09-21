@@ -28,8 +28,8 @@
                     <div class="col-12">
                         <div class="search-content">
                             <h:form id="searchForm">
-                                <h:inputText id="search" a:placeholder="Type your keyword..."/>
-                                <button type="submit"><h:graphicImage name="flowerstore/img/core-img/search.png" alt="" /></button>
+                                <h:inputText value="#{shopMB.search}" id="search" a:placeholder="Type your keyword..."/>
+                                <h:commandLink action="#{shopMB.goSearch()}" type="submit"><h:graphicImage name="flowerstore/img/core-img/search.png" alt="" /></h:commandLink>
                             </h:form>
                         </div>
                     </div>
@@ -65,10 +65,8 @@
                 <!-- Amado Nav -->
                 <nav class="amado-nav">
                     <ul>
-                        <li><a href="index.html">Home</a></li>
+                        <li><a href="#{request.contextPath}">Home</a></li>
                         <li><a href="#{request.contextPath}/shop">Shop</a></li>
-                        <li><a href="">About</a></li>
-                        <li><a href="">Contact</a></li>
                         <c:if test="#{userManager.user!=null}">
                             <li><h:link outcome="/myaccount">My Account</h:link></li>
                             <li>
@@ -110,7 +108,7 @@
                         <div class="single_widget_area">
                             <!-- Logo -->
                             <div class="footer-logo mr-50">
-                                <a href="index.html"><h:graphicImage name="flowerstore/img/core-img/logo2.png" alt=""/></a>
+                                <a href="index.html"><h:graphicImage name="flowerstore/img/core-img/logo.png" alt=""/></a>
                             </div>
                             <!-- Copywrite Text -->
                             <p class="copywrite"><!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->

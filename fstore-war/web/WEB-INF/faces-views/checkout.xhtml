@@ -1,0 +1,114 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html">
+
+    <body>
+
+        <ui:composition template="./../template/flowerstore/template.xhtml">
+
+            <ui:define name="content">
+                <div class="cart-table-area section-padding-100">
+                    <div class="container-fluid">
+                        <div class="row">
+                            <div class="col-12 col-lg-8">
+                                <div class="cart-title mt-50">
+                                    <h2>Customer Information</h2>
+                                </div>
+                                <div class="cart-table clearfix">
+                                    <div class="row">
+                                        <div class="col-12 col-lg-6">
+                                            <div class="row">
+                                                <div class="col-4">
+                                                    First name:
+                                                </div>
+                                                <div class="col-8">
+                                                    #{userManager.user.fname}
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-4">
+                                                    Last name:
+                                                </div>
+                                                <div class="col-8">
+                                                    #{userManager.user.lname}
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-4">
+                                                    Address
+                                                </div>
+                                                <div class="col-8">
+                                                    #{userManager.user.address}
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-4">
+                                                    Country
+                                                </div>
+                                                <div class="col-8">
+                                                    #{userManager.user.country}
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-4">
+                                                    Email:
+                                                </div>
+                                                <div class="col-8">
+                                                    #{userManager.user.email}
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-12 col-lg-6">
+                                            <div class="row">
+                                                <div class="col-4">
+                                                    Username:
+                                                </div>
+                                                <div class="col-8">
+                                                    #{userManager.user.username}
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-4">
+                                                    Account Type:
+                                                </div>
+                                                <div class="col-8">
+                                                    #{userManager.user.roleId.rolename}
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row mt-50">
+                                        <div class="col-12">
+                                            <h:button outcome="/editaccount" value="Edit information" styleClass="btn amado-btn" />
+                                            <h:button outcome="/myorders" value="My Orders" styleClass="btn amado-btn" />
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-12 col-lg-4">
+                                <div class="cart-summary">
+                                    <h5>Cart Total</h5>
+                                    <ul class="summary-table">
+                                        <li><span>subtotal</span><span><h:outputText id="subtotal" value="$#{cartMB.subTotal}" /></span></li>
+                                        <li><span>discount:</span><span><h:outputText id="discount" value="$#{cartMB.discount}" /></span></li>
+                                        <li><span>total:</span><span><h:outputText id="total" value="$#{cartMB.subTotal - cartMB.discount}" /></span></li>
+                                    </ul>
+
+                                    <div class="cart-btn mt-100">
+                                        <h:form>
+                                            <h:commandLink action="#{cartMB.checkOut()}" styleClass="btn amado-btn w-100">Checkout</h:commandLink>
+                                        </h:form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </ui:define>
+
+        </ui:composition>
+
+    </body>
+</html>

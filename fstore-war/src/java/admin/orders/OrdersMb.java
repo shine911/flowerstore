@@ -37,6 +37,7 @@ public class OrdersMb implements Serializable {
     private int ordersState;
     private Double discountValue;
     private Double totalValue;
+    private String search;
     private Promo promoId;
     private Userinfo cusId;
     private List<Orders> listOrder;
@@ -248,6 +249,17 @@ public class OrdersMb implements Serializable {
     }
 
     public void findByTotalValue() {
-        listOrder = ordersFacade.findByTotalValue(totalValue);
+        listOrder = ordersFacade.findAll().stream()
+                .filter(p -> p.getId() == Integer.parseInt(search))
+                .collect(Collectors.toList());
     }
+
+    public String getSearch() {
+        return search;
+    }
+
+    public void setSearch(String search) {
+        this.search = search;
+    }
+    
 }

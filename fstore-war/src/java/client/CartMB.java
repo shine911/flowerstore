@@ -167,15 +167,30 @@ public class CartMB implements Serializable {
             return ordDetails;
         }).forEachOrdered(ordDetails -> {
             ordersDetailsFacade.create(ordDetails);
-        }); 
+        });
         //orders_new.setOrdersDetailsCollection(ordersDetials);
         UtilsHelper helper = new UtilsHelper();
         this.ordersDetials = new ArrayList<>();
         this.promoObj = null;
         this.promo_code = "";
-        
+
         //Refresh user session bean
         this.userManager.refresh();
-        helper.moveToPage("/myorders");
+        moveToPage("/myorders");
+    }
+
+    public String goToCheckOut() {
+        return "checkout";
+    }
+
+    public void moveToPage(String page) {
+        try {
+            FacesContext context = FacesContext.getCurrentInstance();
+            HttpServletRequest origRequest = (HttpServletRequest) context.getExternalContext().getRequest();
+            String contextPath = origRequest.getContextPath();
+            context.getExternalContext().redirect(contextPath + page);
+        } catch (IOException ex) {
+            Logger.getLogger(ProductDetails.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 }
